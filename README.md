@@ -23,6 +23,45 @@ It's a pure function. The same inputs always give the same result, and it never 
 | Data jobs | Monthly and yearly scripts that turn public data (such as DOT flight records) into the files the engine reads |
 | Reports and posts | A site at open.rideorfly.app (coming), with monthly accuracy reports |
 
+## Using it
+
+```ts
+import { checkTake, score, validateAnswers } from '@rideorfly/engine';
+
+const problems = validateAnswers(answers);
+
+// Answers and lookups in; every line, the comfort breakdown, and the verdict out.
+const result = score(answers, lookups, edits);
+
+result.verdict; // 'ride' or 'fly'
+result.confidence; // 'toss-up', 'leans', or 'clear'
+result.ride.lines; // each with its value, source tag, and the value Ours used
+```
+
+The engine never fetches anything. The app looks up the drive, the fare, and the rates, and passes them in as `lookups`. Every shape that goes in or comes out is in [`src/types.ts`](src/types.ts), and every assumption the engine makes, with the reason for it, is in [`src/defaults.ts`](src/defaults.ts).
+
+## How it decides
+
+1. **Lines.** Each side gets cost and time lines, door to door: fuel and wear, hotel stops, meals on the road, fares, bags, getting to and from the airports, the time at the airport, the flight, and expected delays. Each line's total is rounded to $5 or 5 minutes, since these are estimates to help decide, not a budget.
+2. **The clock.** Both sides leave at 8:00 a.m. The drive is laid out on the clock, so meals and night driving are counted the same way for both sides.
+3. **Comfort.** Both sides start at 7 out of 10, and named adjustments move them: long days, night driving, road risk by state, winter passes, connections, delay odds, children, pets, and the traveler's own preference.
+4. **The verdict.** Cost, time, and comfort each become a lean toward Ride or Fly, weighted 40%, 35%, and 25% by default. The weighted sum is the verdict, and its size is the confidence.
+
+## Development
+
+You'll need Node 24 (see `.nvmrc`).
+
+| Task | Command |
+| --- | --- |
+| Install | `npm install` |
+| Run the tests | `npm test` |
+| Check formatting and lint | `npm run check` (`npm run format` fixes what it can) |
+| Check types | `npm run typecheck` |
+| Build `dist/engine.min.js` and print its integrity hash | `npm run build` |
+| Everything CI runs | `npm run verify` |
+
+Test data is made up. It never comes from Google, whose route results can't be stored.
+
 ## Checking the live site
 
 Once releases begin, each one is built by GitHub Actions and published to npm with provenance, which links the package to the exact commit it was built from. Ride or Fly will serve that file unchanged and list its version and hash on its Verify page, so anyone can compare the code running on the site with the code here.

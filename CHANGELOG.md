@@ -1,0 +1,15 @@
+# Changelog
+
+Every change that can move a result (a formula, a default, or a threshold) is a new minor version, and is listed here with what moved.
+
+## 0.1.0 (unreleased)
+
+The first version of the engine.
+
+- Ride and Fly cost and time lines, door to door, each rounded to $5 or 5 minutes.
+- The 8:00 a.m. travel clock for rest stops, meals, and night driving.
+- Comfort from named adjustments, starting both sides at 7.
+- The verdict: cost 40%, time 35%, comfort 25%; a toss-up below 0.05, leans below 0.15.
+- The user's edits, Ours vs. Yours, and meaningful changes.
+- Airport ranking and the too-close-to-fly check.
+- Our take: prompt `take-v1`, its input, named figures, the output check, and the code-written summary.

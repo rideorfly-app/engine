@@ -25,10 +25,40 @@ The owner is a web developer who builds custom WordPress themes and plugins. Inf
 
 | Path | What it is |
 | --- | --- |
-| `LICENSE` | Apache License 2.0, the official text |
-| `NOTICE` | Copyright and the trademark note |
-| `README.md` | Public description of the engine |
+| `src/index.ts` | The public API: everything the app imports |
+| `src/types.ts` | The data model: answers, lookups, edits, and the result |
+| `src/units.ts` | Names for plain numbers (`Dollars`, `Minutes`, `Miles`, ...) |
+| `src/defaults.ts` | Every assumption and estimate, with its reason |
+| `src/score.ts` | `score()`: builds Ours and Yours, applies edits, decides |
+| `src/ride.ts`, `src/fly.ts` | Each side's cost and time lines |
+| `src/clock.ts`, `src/sun.ts` | The 8:00 a.m. travel clock: stops, meals, night driving |
+| `src/comfort.ts`, `src/verdict.ts` | Comfort adjustments, leans, verdict, confidence |
+| `src/compare.ts` | Ours vs. Yours, and meaningful changes |
+| `src/airports.ts` | Ranking airport pairs; too close to fly |
+| `src/notes.ts` | "You'd have missed this" notes |
+| `src/validate.ts` | Ranges for answers and assumptions |
+| `src/take/` | Our take: the prompt, its input, figures, the check, filling, and the code-written summary |
+| `test/` | Vitest tests; `test/fixtures.ts` has the sample matchups (made-up figures) |
+| `scripts/build.mjs` | Builds `dist/engine.min.js` reproducibly and prints its integrity hash |
+| `scripts/smoke.mjs` | Imports the built file and scores a matchup |
+| `CHANGELOG.md` | What moved in each version |
 
 ## Commands
 
-None yet. Tooling (TypeScript, Vitest, esbuild, Biome) comes in the first pull request.
+| Task | Command |
+| --- | --- |
+| Install | `npm install` |
+| Tests | `npm test` |
+| Format and lint (fix with `npm run format`) | `npm run check` |
+| Types | `npm run typecheck` |
+| Build and print the integrity hash | `npm run build` |
+| Everything CI runs | `npm run verify` |
+
+## Code style
+
+The engine is open source, so it's written to be read.
+
+- Tabs for indenting, single quotes, and Biome's formatting (`npm run format`).
+- Short, helpful comments: why something is the way it is, not what the next line does. Every exported function and type gets a one-line doc comment.
+- Precise types in the TypeScript itself, using the names in `src/units.ts`. They play the role PHPStan's docblock types play in PHP, checked on every build.
+- Blank lines between steps, and section comments (`// --- The car ---`) in long functions.
