@@ -41,6 +41,8 @@ The owner is a web developer who builds custom WordPress themes and plugins. Inf
 | `test/` | Vitest tests; `test/fixtures.ts` has the sample matchups (made-up figures) |
 | `scripts/build.mjs` | Builds `dist/engine.min.js` reproducibly and prints its integrity hash |
 | `scripts/smoke.mjs` | Imports the built file and scores a matchup |
+| `benchmarks/` | Real trips for Phase 1's accuracy gate; its README has the format, how to gather a trip, lessons, and the coverage slate |
+| `scripts/benchmarks.mjs` | Scores each benchmark trip and compares it to the real figures |
 | `CHANGELOG.md` | What moved in each version |
 
 ## Commands
@@ -53,6 +55,7 @@ The owner is a web developer who builds custom WordPress themes and plugins. Inf
 | Types | `npm run typecheck` |
 | Build and print the integrity hash | `npm run build` |
 | Everything CI runs | `npm run verify` |
+| Benchmark trips (after a build) | `npm run benchmarks` |
 
 ## Code style
 
