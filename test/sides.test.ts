@@ -9,7 +9,7 @@ import { familyAnswers, familyLookups, soloAnswers, soloLookups } from './fixtur
 const settings: Settings = { maxDrivingHours: 10, hotel: true };
 
 /** A line's value by id, or undefined if the side has no such line. */
-const valueOf = (lines: Array<{ id: string; value: number }>, id: string) =>
+const lineValue = (lines: Array<{ id: string; value: number }>, id: string) =>
 	lines.find((line) => line.id === id)?.value;
 
 describe('hotelNights', () => {
@@ -26,11 +26,11 @@ describe('buildRide', () => {
 		const ride = buildRide(familyAnswers(), familyLookups(), settings);
 
 		// 540 mi ÷ 27 mpg × $3.10 = $62, rounded to $60.
-		expect(valueOf(ride.lines, 'ride.fuel')).toBe(60);
-		expect(valueOf(ride.lines, 'ride.wear')).toBe(55);
+		expect(lineValue(ride.lines, 'ride.fuel')).toBe(60);
+		expect(lineValue(ride.lines, 'ride.wear')).toBe(55);
 
 		// One lunch: $19 × (2 adults + 2 children at two-thirds), plus $20 of snacks.
-		expect(valueOf(ride.lines, 'ride.food')).toBe(85);
+		expect(lineValue(ride.lines, 'ride.food')).toBe(85);
 
 		expect(totalOf(ride.lines, 'cost')).toBe(200);
 	});
@@ -54,17 +54,17 @@ describe('buildRide', () => {
 	it('adds stops and a winter delay in December', () => {
 		const ride = buildRide(familyAnswers(), familyLookups(), settings);
 
-		expect(valueOf(ride.lines, 'ride.driving')).toBe(490);
-		expect(valueOf(ride.lines, 'ride.restStops')).toBe(45);
-		expect(valueOf(ride.lines, 'ride.mealStops')).toBe(30);
-		expect(valueOf(ride.lines, 'ride.winterDelay')).toBe(30);
+		expect(lineValue(ride.lines, 'ride.driving')).toBe(490);
+		expect(lineValue(ride.lines, 'ride.restStops')).toBe(45);
+		expect(lineValue(ride.lines, 'ride.mealStops')).toBe(30);
+		expect(lineValue(ride.lines, 'ride.winterDelay')).toBe(30);
 		expect(totalOf(ride.lines, 'time')).toBe(595);
 	});
 
 	it('drops the winter delay in summer', () => {
 		const ride = buildRide(familyAnswers({ date: '2026-07-10' }), familyLookups(), settings);
 
-		expect(valueOf(ride.lines, 'ride.winterDelay')).toBeUndefined();
+		expect(lineValue(ride.lines, 'ride.winterDelay')).toBeUndefined();
 	});
 
 	it('adds hotel nights to a long drive', () => {
@@ -77,8 +77,8 @@ describe('buildRide', () => {
 		expect(ride.plan.days).toHaveLength(3);
 
 		// Two nights, one room for four, at $110.
-		expect(valueOf(ride.lines, 'ride.hotel')).toBe(220);
-		expect(valueOf(ride.lines, 'ride.hotelNights')).toBe(120);
+		expect(lineValue(ride.lines, 'ride.hotel')).toBe(220);
+		expect(lineValue(ride.lines, 'ride.hotelNights')).toBe(120);
 	});
 
 	it('keeps the hotel line, switched off, when driving straight through', () => {
@@ -91,23 +91,23 @@ describe('buildRide', () => {
 		expect(ride.straightThrough).toBe(true);
 		expect(hotel?.on).toBe(false);
 		expect(hotel?.value).toBe(110);
-		expect(valueOf(ride.lines, 'ride.hotelNights')).toBeUndefined();
+		expect(lineValue(ride.lines, 'ride.hotelNights')).toBeUndefined();
 	});
 
 	it('prices a rental with its drop fee', () => {
 		const ride = buildRide(familyAnswers({ car: { kind: 'rental' } }), familyLookups(), settings);
 
 		// $55 a day × 1.22.
-		expect(valueOf(ride.lines, 'ride.rental')).toBe(65);
-		expect(valueOf(ride.lines, 'ride.dropFee')).toBe(150);
-		expect(valueOf(ride.lines, 'ride.wear')).toBeUndefined();
+		expect(lineValue(ride.lines, 'ride.rental')).toBe(65);
+		expect(lineValue(ride.lines, 'ride.dropFee')).toBe(150);
+		expect(lineValue(ride.lines, 'ride.wear')).toBeUndefined();
 	});
 
 	it('adds a second car above five travelers', () => {
 		const ride = buildRide(familyAnswers({ adults: 4, children: 2 }), familyLookups(), settings);
 
 		// The second car's fuel and wear: $62 + $54.
-		expect(valueOf(ride.lines, 'ride.secondCar')).toBe(115);
+		expect(lineValue(ride.lines, 'ride.secondCar')).toBe(115);
 	});
 
 	it('uses the user’s gas price and mpg', () => {
@@ -118,7 +118,7 @@ describe('buildRide', () => {
 		});
 
 		// 540 ÷ 40 × $4 = $54.
-		expect(valueOf(ride.lines, 'ride.fuel')).toBe(55);
+		expect(lineValue(ride.lines, 'ride.fuel')).toBe(55);
 	});
 });
 
@@ -128,17 +128,17 @@ describe('buildFly', () => {
 	it('prices the family flight', () => {
 		const fly = buildFly(familyAnswers(), familyLookups(), familyFlight(), settings);
 
-		expect(valueOf(fly.lines, 'fly.fares')).toBe(515);
-		expect(valueOf(fly.lines, 'fly.bags')).toBe(70);
+		expect(lineValue(fly.lines, 'fly.fares')).toBe(515);
+		expect(lineValue(fly.lines, 'fly.bags')).toBe(70);
 
 		// The default rate for a large hub: 6 days × $15.
-		expect(valueOf(fly.lines, 'fly.parking')).toBe(90);
+		expect(lineValue(fly.lines, 'fly.parking')).toBe(90);
 
 		// 25 miles ÷ 27 mpg × $3.10.
-		expect(valueOf(fly.lines, 'fly.fuelToAirport')).toBe(5);
+		expect(lineValue(fly.lines, 'fly.fuelToAirport')).toBe(5);
 
 		// The friend's 44-mile round trip.
-		expect(valueOf(fly.lines, 'fly.fromAirport')).toBe(5);
+		expect(lineValue(fly.lines, 'fly.fromAirport')).toBe(5);
 	});
 
 	it('uses the airport’s own parking rate when it has one', () => {
@@ -147,20 +147,20 @@ describe('buildFly', () => {
 
 		const fly = buildFly(familyAnswers(), familyLookups(), flight, settings);
 
-		expect(valueOf(fly.lines, 'fly.parking')).toBe(60);
+		expect(lineValue(fly.lines, 'fly.parking')).toBe(60);
 	});
 
 	it('lays out the family’s day', () => {
 		const fly = buildFly(familyAnswers(), familyLookups(), familyFlight(), settings);
 
-		expect(valueOf(fly.lines, 'fly.timeToAirport')).toBe(35);
-		expect(valueOf(fly.lines, 'fly.shuttle')).toBe(15);
+		expect(lineValue(fly.lines, 'fly.timeToAirport')).toBe(35);
+		expect(lineValue(fly.lines, 'fly.shuttle')).toBe(15);
 
 		// A large hub, plus time to check bags.
-		expect(valueOf(fly.lines, 'fly.buffer')).toBe(120);
-		expect(valueOf(fly.lines, 'fly.flights')).toBe(95);
-		expect(valueOf(fly.lines, 'fly.delay')).toBe(15);
-		expect(valueOf(fly.lines, 'fly.baggageClaim')).toBe(20);
+		expect(lineValue(fly.lines, 'fly.buffer')).toBe(120);
+		expect(lineValue(fly.lines, 'fly.flights')).toBe(95);
+		expect(lineValue(fly.lines, 'fly.delay')).toBe(15);
+		expect(lineValue(fly.lines, 'fly.baggageClaim')).toBe(20);
 		expect(totalOf(fly.lines, 'time')).toBe(345);
 	});
 
@@ -169,7 +169,7 @@ describe('buildFly', () => {
 
 		// Arriving at 1:45 p.m. spans lunch: $63.33 × 1.25, plus $20 of snacks.
 		expect(fly.arrival).toBe(13 * 60 + 45);
-		expect(valueOf(fly.lines, 'fly.food')).toBe(100);
+		expect(lineValue(fly.lines, 'fly.food')).toBe(100);
 	});
 
 	it('estimates a fare when none was found', () => {
@@ -193,8 +193,8 @@ describe('buildFly', () => {
 		expect(fly.connections).toBe(1);
 
 		// Two flights' overhead, about 450 flown miles at 450 mph, and a layover: 60 + 60 + 90.
-		expect(valueOf(fly.lines, 'fly.flights')).toBe(210);
-		expect(valueOf(fly.lines, 'fly.delay')).toBe(30);
+		expect(lineValue(fly.lines, 'fly.flights')).toBe(210);
+		expect(lineValue(fly.lines, 'fly.delay')).toBe(30);
 	});
 
 	it('prices the solo trip’s rideshare and transit', () => {
@@ -202,11 +202,11 @@ describe('buildFly', () => {
 		const fly = buildFly(soloAnswers(), lookups, lookups.flight as FlightLookups, settings);
 
 		// ($2.50 + 13 mi × $1.20 + 40 min × $0.30) × 1.2 = $36.12.
-		expect(valueOf(fly.lines, 'fly.rideToAirport')).toBe(35);
-		expect(valueOf(fly.lines, 'fly.fromAirport')).toBe(5);
+		expect(lineValue(fly.lines, 'fly.rideToAirport')).toBe(35);
+		expect(lineValue(fly.lines, 'fly.fromAirport')).toBe(5);
 
 		// Twice the 20-minute drive, plus 15.
-		expect(valueOf(fly.lines, 'fly.timeFromAirport')).toBe(55);
+		expect(lineValue(fly.lines, 'fly.timeFromAirport')).toBe(55);
 	});
 });
 
