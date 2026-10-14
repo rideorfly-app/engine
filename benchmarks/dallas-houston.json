@@ -87,10 +87,10 @@
 			"destination": 55
 		},
 		"roadSafety": {
-			"source": "TxDOT 2024 crash facts",
-			"asOf": "2025-06-01",
+			"source": "IIHS from FARS, 2024",
+			"asOf": "2026-06-01",
 			"byState": { "TX": 1.35 },
-			"national": 1.26
+			"national": 1.19
 		},
 		"utcOffsetMinutes": -360
 	},

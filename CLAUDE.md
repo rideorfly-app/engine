@@ -43,6 +43,7 @@ The owner is a web developer who builds custom WordPress themes and plugins. Inf
 | `scripts/smoke.mjs` | Imports the built file and scores a matchup |
 | `benchmarks/` | Real trips for Phase 1's accuracy gate; its README has the format, how to gather a trip, lessons, and the coverage slate |
 | `scripts/benchmarks.mjs` | Scores each benchmark trip and compares it to the real figures |
+| `scripts/benchmark-route.mjs` | Gathers a benchmark trip's drive from OpenStreetMap (network; never used by the engine) |
 | `CHANGELOG.md` | What moved in each version |
 
 ## Commands

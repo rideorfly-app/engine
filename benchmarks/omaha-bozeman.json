@@ -1,0 +1,142 @@
+{
+	"id": "omaha-bozeman",
+	"title": "Omaha to Bozeman, a family of four, the week before Christmas",
+	"covers": "Long drive with one night; family with two children; thirsty car; winter pass; no nonstop (one connection); medium to small airport; parking; two checked bags; rental at the destination; crosses a time zone",
+	"gatheredOn": "2026-10-14",
+	"gatheredBy": "Claude",
+	"answers": {
+		"from": { "id": "3137000", "name": "Omaha", "state": "NE", "lat": 41.2565, "lon": -95.9345 },
+		"to": { "id": "3008950", "name": "Bozeman", "state": "MT", "lat": 45.677, "lon": -111.0429 },
+		"date": "2026-12-17",
+		"adults": 2,
+		"children": 2,
+		"car": { "kind": "own", "mpg": 24 },
+		"toAirport": { "mode": "park", "daysParked": 8 },
+		"fromAirport": "rental",
+		"checkedBags": 2,
+		"pets": 0,
+		"preference": 0,
+		"longDrive": "hotel"
+	},
+	"lookups": {
+		"drive": {
+			"source": "OSRM (OpenStreetMap contributors)",
+			"asOf": "2026-10-14",
+			"miles": 980.5,
+			"minutes": 1013,
+			"milesByState": { "NE": 1, "IA": 98.9, "SD": 490.6, "WY": 21, "MT": 369 },
+			"winterPasses": ["Bozeman Pass (I-90)"],
+			"midpoint": { "lat": 44.12, "lon": -103.27 }
+		},
+		"flight": {
+			"origin": {
+				"code": "OMA",
+				"name": "Omaha Eppley Airfield",
+				"size": "medium",
+				"lat": 41.303,
+				"lon": -95.894,
+				"parkingPerDay": 15
+			},
+			"destination": {
+				"code": "BZN",
+				"name": "Bozeman Yellowstone International",
+				"size": "small",
+				"lat": 45.777,
+				"lon": -111.16
+			},
+			"toOrigin": {
+				"source": "OSRM (OpenStreetMap contributors)",
+				"asOf": "2026-10-14",
+				"miles": 4.1,
+				"minutes": 10
+			},
+			"fromDestination": {
+				"source": "OSRM (OpenStreetMap contributors)",
+				"asOf": "2026-10-14",
+				"miles": 10.8,
+				"minutes": 16
+			},
+			"fare": {
+				"source": "southwest.com route page (Basic fare, via Denver)",
+				"asOf": "2026-10-14",
+				"perPerson": 214.5,
+				"minutes": 289,
+				"stops": 1
+			},
+			"schedule": null,
+			"reliability": null
+		},
+		"gas": {
+			"source": "EIA",
+			"asOf": "2026-10-12",
+			"byRegion": { "midwest": 4.145, "rocky-mountain": 4.439 },
+			"national": 4.331
+		},
+		"perDiem": {
+			"source": "GSA FY2027",
+			"asOf": "2026-10-01",
+			"start": { "lunch": 22, "lodging": 128 },
+			"destination": { "lunch": 22, "lodging": 169 },
+			"overnight": { "lunch": 22, "lodging": 113 }
+		},
+		"rental": {
+			"source": "Kayak, BZN December average (start not used: own car)",
+			"asOf": "2026-10-14",
+			"start": 135,
+			"destination": 135
+		},
+		"roadSafety": {
+			"source": "IIHS from FARS, 2024",
+			"asOf": "2026-06-01",
+			"byState": { "NE": 1.15, "IA": 1.05, "SD": 1.4, "WY": 1.1, "MT": 1.49 },
+			"national": 1.19
+		},
+		"utcOffsetMinutes": -360
+	},
+	"actual": {
+		"ride": {
+			"minutes": 1273,
+			"cost": 655.36,
+			"parts": [
+				"1,013 min driving (OSRM)",
+				"105 min for seven 15-minute stops with children, about every 2½ hours (Claude's call)",
+				"90 min for two lunch stops on the road, 45 minutes each with children (Claude's call)",
+				"Dinner on day one is in Spearfish, SD after checking in, so it adds no road time",
+				"45 min getting off the road, checking in, and loading the car in the morning (Claude's call)",
+				"20 min expected weather slowdown over Bozeman Pass in December (Claude's call)",
+				"$174.11 gas: 590.5 mi in NE, IA, and SD ÷ 24 mpg × $4.145 (EIA Midwest) + 390 mi in WY and MT ÷ 24 × $4.439 (EIA Rocky Mountain), 2026-10-12",
+				"$108.25 tires, maintenance, and repair: 980.5 mi × 11.04¢ (AAA Your Driving Costs, 2025)",
+				"$113 one room in Spearfish, SD (GSA FY2027, Deadwood / Spearfish)",
+				"$220 three meals (lunch, dinner, lunch) for two adults at $22 and two children at two-thirds (GSA $80 M&IE tier); breakfast is free at the hotel (Claude's call)",
+				"$40 snacks and drinks: $5 a person a day for two days (Claude's call)"
+			]
+		},
+		"fly": {
+			"minutes": 485,
+			"cost": 1302.61,
+			"parts": [
+				"10 min door to OMA (OSRM)",
+				"15 min parking and the shuttle (Claude's call)",
+				"90 min at OMA before departure: checked bags and children, medium airport (Claude's call)",
+				"289 min gate to gate via Denver, Southwest's average for the route (Rome2Rio)",
+				"15 min off the plane, 20 min baggage claim, 30 min rental counter in peak season (Claude's call)",
+				"16 min BZN to door (OSRM)",
+				"$858 four Southwest Basic fares at $214.50 for 2026-12-17, shown 2026-10-14",
+				"$90 two first checked bags at $45 (Southwest, raised 2026-04-09)",
+				"$120 eight days of parking at $15 (ParkOMA South Garage Rooftop)",
+				"$0.71 gas to OMA: 4.1 mi ÷ 24 mpg × $4.145",
+				"$153.90 one rental day at BZN: $135 (Kayak's December average) + 10% airport concession fee + 4% Montana rental tax",
+				"$60 lunch at DEN during the connection: $18 an adult, $12 a child (Claude's call)",
+				"$20 snacks and drinks: $5 a person (Claude's call)"
+			]
+		}
+	},
+	"notes": [
+		"Southwest has no nonstop on this route, so DOT has no scheduled time for it; `schedule` is null and the fare carries the itinerary's length and one stop.",
+		"The 2:15 p.m. arrival time in Bozeman is on Omaha's clock, an hour ahead of Bozeman's.",
+		"Kayak, Hertz, and Cheapflights gave $135, $169, and $231 as Bozeman's December daily rental average. Kayak's is used; it's the biggest swing in this trip's cost.",
+		"The Basic fare is the lowest shown for one traveler. Four seats at that price on one flight isn't guaranteed this close to the holidays.",
+		"The route crosses US 212 through rural northeast Wyoming and southeast Montana, with long gaps between services in winter. That's for Our take to weigh, not the numbers.",
+		"The family parks at OMA for eight days, until the drive home after Christmas; only the outbound trip is compared."
+	]
+}

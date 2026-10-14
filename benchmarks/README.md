@@ -36,21 +36,32 @@ Each trip is one JSON file, named after its route (`dallas-houston.json`).
 ## How to gather a trip
 
 1. **Places.** Use a city center or a ZIP code area's center for each door. Record its lat and lon.
-2. **The drive.** Ask the public OSRM server for the route (no key needed):
+2. **The drive.** Run the route helper. It asks the public OSRM server for the route and Nominatim for the states, and prints miles, minutes, miles in each state, the midpoint, and where a 10-hour driving day ends (for picking the overnight town). A long route takes a minute or two, because Nominatim allows one request a second.
 
    ```sh
-   curl -s "https://router.project-osrm.org/route/v1/driving/FROM_LON,FROM_LAT;TO_LON,TO_LAT?overview=simplified&geometries=geojson"
+   node scripts/benchmark-route.mjs FROM_LAT,FROM_LON TO_LAT,TO_LON
    ```
 
-   `distance` is meters (÷ 1609.34 for miles) and `duration` is seconds. The midpoint is the middle coordinate of `geometry.coordinates`. Use the same call for each door-to-airport leg.
-3. **Airports.** Use the FAA's hub size (large, medium, small; nonhubs count as small).
-4. **The fare.** Search the airline's route page or a booking site for the date, by hand. Record the price, the fare type (Basic, Main), the date it was shown, and connections.
-5. **The flight's length.** DOT's scheduled time when available, otherwise the airline's or a travel site's typical length.
+   For each door-to-airport leg, a plain OSRM call is enough (`distance` is meters, `duration` is seconds):
+
+   ```sh
+   curl -s "https://router.project-osrm.org/route/v1/driving/FROM_LON,FROM_LAT;TO_LON,TO_LAT?overview=false"
+   ```
+3. **Airports.** Use the FAA's hub size (large, medium, small; nonhubs count as small). Wikipedia's airport pages state it.
+4. **The fare.** Search the airline's route page or a booking site for the date, by hand. Record the price, the fare type (Basic, Main), the date it was shown, and connections. Southwest's route pages (`southwest.com/en/flights/flights-from-CITY-to-CITY`) carry a dated one-way fare calendar in the page's data; look for `"departureDate"` next to `"totalPrice"`. Pick the trip's date from the dates that have a fare.
+5. **The flight's length.** DOT's scheduled time when there's a nonstop, otherwise the airline's or a travel site's typical length for the itinerary (Rome2Rio lists connecting itineraries' averages). With no nonstop, `schedule` is null and the fare carries `minutes` and `stops`.
 6. **Gas.** EIA's weekly regular gasoline table at `eia.gov/petroleum/gasdiesel/` has every region on one page.
-7. **Meals and lodging.** GSA per diem for each city. The lunch figure is from GSA's M&IE breakdown table (`gsa.gov/mie`), keyed by the city's daily M&IE total.
+7. **Meals and lodging.** GSA per diem for each city, the overnight town included. GSA's API answers with the demo key, no sign-up, and gives the county area and each month's lodging:
+
+   ```sh
+   curl -s "https://api.gsa.gov/travel/perdiem/v2/rates/city/Bozeman/state/MT/year/2027?api_key=DEMO_KEY"
+   ```
+
+   The lunch figure is from GSA's M&IE breakdown table (`gsa.gov/mie`), keyed by the area's daily M&IE total (`meals` in the API).
 8. **Wear.** AAA's Your Driving Costs: tires, maintenance, and repair per mile.
-9. **Road safety.** Each state's deaths per 100 million vehicle miles, from NHTSA or the state's DOT.
-10. **Run it** with `npm run benchmarks`, and write down anything learned below.
+9. **Road safety.** IIHS's state-by-state page lists every state's deaths per 100 million miles and the national rate, from NHTSA's FARS data, in one table.
+10. **Parking, bags, and rental.** The airport's own parking page for its cheapest lot with a shuttle; the airline's current bag fees; the rental's daily rate for the month and the airport's taxes and fees.
+11. **Run it** with `npm run benchmarks`, and write down anything learned below.
 
 ### Reference figures
 
@@ -60,7 +71,9 @@ These change rarely, so later trips can reuse them until they're out of date.
 | --- | --- | --- |
 | GSA lunch by M&IE total | $68 → $19, $74 → $20, $80 → $22, $86 → $23, $92 → $26 | GSA M&IE breakdown, FY2027 |
 | Tires, maintenance, and repair | 11.04¢ a mile | AAA Your Driving Costs, 2025 |
-| National road deaths | 1.26 per 100 million miles | NHTSA |
+| Road deaths per 100 million miles | US 1.19; TX 1.35; NE 1.15; IA 1.05; SD 1.40; WY 1.10; MT 1.49 | IIHS from FARS, 2024 (posted June 2026) |
+| Southwest checked bags | $45 first, $55 second | Southwest, from 2026-04-09 |
+| GSA per diem used so far | Dallas $184; Houston $133; Omaha $128; Spearfish, SD $113; Bozeman $169 (lodging); all $80 M&IE | GSA FY2027 |
 
 ## Lessons so far
 
@@ -68,11 +81,28 @@ Add to this list with every trip, so the next one is quicker and better.
 
 - **Define "real" on the engine's basis first.** The first try counted only gas for the drive and failed by 161%; the engine's fuel line was within 2%.
 - **Meal cost and meal time should agree.** Dallas–Houston counts lunch in the drive's real cost but has no lunch stop in its real time. It still passes, but at +11.5% it's the closest check. A real trip report would settle how long the stop takes.
+- **Real flight times leave out delay, so far.** Neither trip's real total includes an expected delay, because DOT's record for a single route is hard to find; the engine adds 15–30 minutes. Fly time will read a little high until a delay source is settled. Once the DOT data job exists, add the route's average arrival delay to `actual` too.
 - **OSRM may run slow on highways.** It gave Dallas–Houston 4 h 14 min, a little longer than the 3½ to 4 hours usually quoted. Watch for a pattern across trips before tuning anything.
-- **Southwest's route pages show dated fares** in search results ("from $114 on Nov 3"), which makes Southwest routes quick to gather.
+- **Southwest's route pages hold a fare calendar** in the page's data, so Southwest routes are quick to gather. Other airlines' pages don't; the first non-Southwest trip will show what works for them.
+- **Some figures have several sources that disagree.** Bozeman's December rental average was $135, $169, or $231 depending on the site. Record the one used and the others in `notes`.
+- **Families eat differently.** A hotel breakfast is usually free, and meal stops with children run longer than 30 minutes.
+- **Prefer one source for a whole table.** IIHS covers every state's road death rate in one place, GSA's API covers every city's rates, and EIA covers every gas region; that's quicker and more consistent than searching state by state.
+- **Bag fees move.** Southwest started charging in 2025 and raised fees in April 2026. Check the airline's current fee for each trip.
 - **DOT's on-time record for one route is hard to find by web search.** Leave `reliability` null (the engine uses its typical figures) until the DOT data job exists.
 - **Skip web searches for "how early to arrive."** The results are mostly spam pages.
-- **Cost:** about 20,000 to 30,000 Claude tokens a trip once the setup is understood.
+- **Cost:** Dallas–Houston took about 20,000 Claude tokens; Omaha–Bozeman about 35,000, since a long, multi-state trip with a family has more pieces. With the route helper and reference figures, expect 20,000 to 30,000 a trip.
+
+## What the trips suggest for tuning
+
+Patterns to confirm across more trips before changing a default. Changing one is a minor version with a changelog entry.
+
+| Default | Engine | What the trips found | Trips |
+| --- | --- | --- | --- |
+| `DRIVE.wearPerMile` | 10¢ | AAA says 11.04¢ | Both |
+| `FLY.checkedBagFee` | $35 | Southwest charges $45 since April 2026 | Omaha–Bozeman |
+| Hotel breakfast | Counted as a meal | Usually free at mid-range hotels | Omaha–Bozeman: ride cost +10.6%, most of it this |
+| `DRIVE.mealStopMinutes` | 30 | 45 with children seems more realistic | Omaha–Bozeman |
+| Airport meal | GSA lunch × 1.25 | About $18 an adult at a quick-serve counter | Omaha–Bozeman |
 
 ## Coverage
 
@@ -95,11 +125,11 @@ Twenty trips that test the same thing are worth less than five that don't. Each 
 | # | Trip | Adds | Status |
 | --- | --- | --- | --- |
 | 1 | Dallas → Houston | Short; solo; medium airports; frequent nonstop; cheap gas; drop-off and pickup | Done |
-| 2 | Omaha → Bozeman | Family of four; winter; one night; connection; small airports; parking; checked bags; rental at the destination | Next |
-| 3 | Los Angeles → San Francisco | Couple; California gas; large airports; rideshare both ways | |
+| 2 | Omaha → Bozeman | Family of four; winter pass; one night; thirsty car; connection; medium to small airport; parking; checked bags; rental at the destination; crosses a time zone | Done |
+| 3 | Los Angeles → San Francisco | Couple; California gas; large airports; rideshare both ways; not Southwest | Next |
 | 4 | Manhattan → Boston | Solo; transit both ends; toll roads | |
 | 5 | Baltimore → Philadelphia | Too close to fly | |
-| 6 | Chicago → Nashville | Family with a dog; crosses a time zone | |
+| 6 | Chicago → Nashville | Family with a dog | |
 | 7 | Seattle → Spokane | Winter pass (Snoqualmie) in January | |
 | 8 | Atlanta → Orlando | Family of five; spring break; parking; bags | |
 | 9 | Phoenix → Las Vegas | Rental car; desert summer | |
