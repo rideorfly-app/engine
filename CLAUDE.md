@@ -41,9 +41,10 @@ The owner is a web developer who builds custom WordPress themes and plugins. Inf
 | `test/` | Vitest tests; `test/fixtures.ts` has the sample matchups (made-up figures) |
 | `scripts/build.mjs` | Builds `dist/engine.min.js` reproducibly and prints its integrity hash |
 | `scripts/smoke.mjs` | Imports the built file and scores a matchup |
-| `benchmarks/` | Real trips for Phase 1's accuracy gate; its README has the format, how to gather a trip, lessons, and the coverage slate |
+| `benchmarks/` | Trips with real figures, each part labeled by how it's known; not a merge gate. Its README has the format, how to gather a trip, lessons, and tuning findings |
 | `scripts/benchmarks.mjs` | Scores each benchmark trip and compares it to the real figures |
 | `scripts/benchmark-route.mjs` | Gathers a benchmark trip's drive from OpenStreetMap (network; never used by the engine) |
+| `scripts/benchmark-flights.mjs` | Observed flight times and delays for a benchmark trip, from a month of DOT records |
 | `CHANGELOG.md` | What moved in each version |
 
 ## Commands
