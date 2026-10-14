@@ -33,7 +33,8 @@ export function notesFor(answers: Answers, lookups: Lookups, result: Result): No
 		}
 	}
 
-	const traffic = lookups.drive.minutes - lookups.drive.minutesWithoutTraffic;
+	const withoutTraffic = lookups.drive.minutesWithoutTraffic;
+	const traffic = withoutTraffic === undefined ? 0 : lookups.drive.minutes - withoutTraffic;
 
 	if (traffic >= TRAFFIC_MINUTES) {
 		notes.push({

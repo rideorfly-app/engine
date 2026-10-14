@@ -91,11 +91,14 @@ export interface Dated {
 export interface Drive extends Dated {
 	miles: Miles;
 
-	/** Traffic-aware driving time for the travel day. */
+	/** Google's driving time. The MVP uses times without traffic. */
 	minutes: Minutes;
 
-	/** The same drive without traffic, for the rush-hour note. */
-	minutesWithoutTraffic: Minutes;
+	/**
+	 * Once drive times include traffic (after the MVP), the same drive without
+	 * it, for the rush-hour note. Left out while times have no traffic.
+	 */
+	minutesWithoutTraffic?: Minutes;
 
 	/** How many of the route's miles fall in each state, for gas prices and road safety. */
 	milesByState: Partial<Record<StateCode, Miles>>;

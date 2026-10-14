@@ -198,7 +198,14 @@ describe('notes', () => {
 		expect(result.notes.map((note) => note.id)).toContain('winter');
 	});
 
-	it('mentions heavy traffic', () => {
+	it('says nothing about traffic when drive times have none', () => {
+		const lookups = soloLookups();
+		delete lookups.drive.minutesWithoutTraffic;
+
+		expect(score(soloAnswers(), lookups).notes.map((note) => note.id)).not.toContain('traffic');
+	});
+
+	it('mentions heavy traffic, once drive times include it', () => {
 		const lookups = soloLookups();
 		lookups.drive.minutesWithoutTraffic = 340;
 

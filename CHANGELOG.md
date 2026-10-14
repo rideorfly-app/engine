@@ -6,7 +6,7 @@ Every change that can move a result (a formula, a default, or a threshold) is a 
 
 The first version of the engine.
 
-- Ride and Fly cost and time lines, door to door, each rounded to $5 or 5 minutes.
+- Ride and Fly cost and time lines, door to door, each rounded to $5 or 5 minutes. Drive times come without traffic for the MVP; the rush-hour note appears only once the app passes a time without traffic beside a traffic-aware one.
 - The 8:00 a.m. travel clock for rest stops, meals, and night driving.
 - Comfort from named adjustments, starting both sides at 7.
 - The verdict: cost 40%, time 35%, comfort 25%; a toss-up below 0.05, leans below 0.15.
