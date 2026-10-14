@@ -18,6 +18,7 @@ function relativeLean(ride: number, fly: number): number {
 	return larger === 0 ? 0 : (fly - ride) / larger;
 }
 
+/** Each category's lean, and the weighted overall. */
 export function computeLeans(ride: Totals, fly: Totals, weights: Weights): Leans {
 	const cost = relativeLean(ride.cost, fly.cost);
 	const time = relativeLean(ride.minutes, fly.minutes);
@@ -40,6 +41,7 @@ export function decide(leans: Leans, ride: Totals, fly: Totals): Verdict {
 	return fly.cost < ride.cost ? 'fly' : 'ride';
 }
 
+/** How clear the call is, from the size of the overall lean. */
 export function confidenceOf(overall: number): Confidence {
 	const size = Math.abs(overall);
 

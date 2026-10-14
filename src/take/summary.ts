@@ -11,6 +11,7 @@ import type { Take } from './types';
 /** How the summary names each side. */
 const MODE: Record<Verdict, string> = { ride: 'driving', fly: 'flying' };
 
+/** A take written by code from the numbers' verdict. */
 export function writtenFromNumbers(result: Result): Take {
 	const { verdict, confidence, winners, ride, fly } = result;
 

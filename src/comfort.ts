@@ -29,6 +29,7 @@ export interface FlyComfortInput {
 	cancelChance: Chance;
 }
 
+/** The Ride side's comfort adjustments. */
 export function rideComfort(
 	answers: Answers,
 	lookups: Lookups,
@@ -106,6 +107,7 @@ export function rideComfort(
 	return lines;
 }
 
+/** The Fly side's comfort adjustments. */
 export function flyComfort(answers: Answers, input: FlyComfortInput): ComfortLine[] {
 	const rules = COMFORT.fly;
 	const lines: ComfortLine[] = [];

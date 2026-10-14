@@ -19,6 +19,7 @@ export interface TakeInputOptions {
 	changes?: string[];
 }
 
+/** The object sent to the model with the prompt. */
 export function buildTakeInput(
 	answers: Answers,
 	lookups: Lookups,

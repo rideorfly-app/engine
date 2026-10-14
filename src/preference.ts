@@ -16,6 +16,7 @@ export function preferenceLabelIndex(preference: number): number {
 	return Math.max(0, Math.min(4, Math.round((preference + 100) / 50)));
 }
 
+/** The label a slider value shows. */
 export function preferenceLabel(preference: number): string {
 	return PREFERENCE_LABELS[preferenceLabelIndex(preference)] as string;
 }

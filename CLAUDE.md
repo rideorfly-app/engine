@@ -59,6 +59,6 @@ The owner is a web developer who builds custom WordPress themes and plugins. Inf
 The engine is open source, so it's written to be read.
 
 - Tabs for indenting, single quotes, and Biome's formatting (`npm run format`).
-- Short, helpful comments: why something is the way it is, not what the next line does. Every exported function and type gets a one-line doc comment.
+- Short, helpful comments: why something is the way it is, not what the next line does. Every exported function gets a one-line doc comment, and so does any field whose meaning isn't obvious from its name.
 - Precise types in the TypeScript itself, using the names in `src/units.ts`. They play the role PHPStan's docblock types play in PHP, checked on every build.
 - Blank lines between steps, and section comments (`// --- The car ---`) in long functions.

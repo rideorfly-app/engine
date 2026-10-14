@@ -56,6 +56,7 @@ const SPELLED_AMOUNT = new RegExp(
 	'i',
 );
 
+/** Checks a model's raw output. Returns the take, or every problem with it. */
 export function checkTake(raw: unknown, context: TakeCheckContext): TakeCheck {
 	const problems: string[] = [];
 

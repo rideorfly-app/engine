@@ -28,6 +28,7 @@ export interface FlyDraft {
 /** The rates the Fly side needs. It doesn't depend on the drive. */
 export type FlyRates = Pick<Lookups, 'gas' | 'perDiem' | 'rental'>;
 
+/** Every Fly line, before the user's edits. */
 export function buildFly(
 	answers: Answers,
 	lookups: FlyRates,

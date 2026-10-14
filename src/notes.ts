@@ -16,6 +16,7 @@ const MAX_NOTES = 2;
 /** Traffic worth mentioning. */
 const TRAFFIC_MINUTES = 30;
 
+/** Up to two notes for a scored matchup. */
 export function notesFor(answers: Answers, lookups: Lookups, result: Result): Note[] {
 	const notes: Note[] = [];
 	const { ride, fly } = result;

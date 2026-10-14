@@ -29,6 +29,7 @@ import type {
 import { computeLeans, confidenceOf, decide, winnerOf } from './verdict';
 import { ENGINE_VERSION } from './version';
 
+/** Scores a matchup: every line, the comfort breakdown, and the verdict. */
 export function score(answers: Answers, lookups: Lookups, edits: Edits = {}): Result {
 	const assumptions = edits.assumptions ?? {};
 	const hotelEdit = edits.lines?.['ride.hotel']?.on;

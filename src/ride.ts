@@ -33,6 +33,7 @@ export function hotelNights(drivingMinutes: Minutes, maxDrivingHours: Hours): nu
 	return Math.max(0, Math.ceil(drivingMinutes / 60 / maxDrivingHours) - 1);
 }
 
+/** Every Ride line, before the user's edits. */
 export function buildRide(answers: Answers, lookups: Lookups, settings: Settings): RideDraft {
 	const { drive } = lookups;
 	const travelers = answers.adults + answers.children;

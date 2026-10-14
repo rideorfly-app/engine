@@ -49,6 +49,7 @@ export interface Comparison {
 	message: string | null;
 }
 
+/** Sets Yours beside Ours, side by side and line by line. */
 export function compare(ours: Result, yours: Result): Comparison {
 	const lines = [...yours.ride.lines, ...(yours.fly?.lines ?? [])]
 		.filter((line) => line.value !== line.ours.value || line.on !== line.ours.on)
@@ -132,6 +133,7 @@ const THRESHOLDS = {
 /** Lines judged by their own threshold above, not the general cost rule. */
 const OWN_RULES = new Set(['fly.fares', 'ride.fuel']);
 
+/** The changes between two snapshots that are big enough to mention. */
 export function meaningfulChanges(before: Snapshot, after: Snapshot): Change[] {
 	const changes: Change[] = [];
 	const was = before.answers;
