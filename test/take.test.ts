@@ -25,8 +25,7 @@ const goodTake: Take = {
 	differs_from_numbers:
 		'The numbers favor driving by {cost_diff}; we weighed the long day more heavily.',
 	changes_assessment: null,
-	share_summary:
-		'Flying wins this one for the family. The drive is long with kids in winter.',
+	share_summary: 'Flying wins this one for the family. The drive is long with kids in winter.',
 };
 
 describe('figuresFor', () => {

@@ -29,7 +29,8 @@
 		"typecheck": "tsc --noEmit",
 		"test": "vitest run",
 		"test:watch": "vitest",
-		"verify": "npm run check && npm run typecheck && npm test && npm run build"
+		"verify": "npm run check && npm run typecheck && npm test && npm run build && npm run smoke",
+		"smoke": "node scripts/smoke.mjs"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.15",

@@ -24,6 +24,7 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
+      - run: npm run smoke
 
       # The published file must be reproducible: building the same commit twice
       # has to give the same bytes, or the hash on the Verify page means nothing.
