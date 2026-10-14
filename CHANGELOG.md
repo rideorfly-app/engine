@@ -12,4 +12,5 @@ The first version of the engine.
 - The verdict: cost 40%, time 35%, comfort 25%; a toss-up below 0.05, leans below 0.15.
 - The user's edits, Ours vs. Yours, and meaningful changes.
 - Airport ranking and the too-close-to-fly check.
+- The expected delay never goes below zero. DOT's average counts early arrivals, so when a route's flights usually land early, the time saved comes off the flight time instead.
 - Our take: prompt `take-v1`, its input, named figures, the output check, and the code-written summary.

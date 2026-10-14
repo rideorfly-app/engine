@@ -161,6 +161,13 @@ export function buildFly(
 		FLY.arrivalBufferMinutes[origin.size] +
 			(answers.checkedBags > 0 ? FLY.checkedBagExtraMinutes : 0);
 
+	// DOT's average counts early arrivals, so on some routes and months it's
+	// below zero. A negative delay line would read oddly, so the time saved
+	// comes off the flight instead, and the delay line shows none.
+	const delay = reliability.averageDelayMinutes * (connections + 1);
+	const flights = flightTime(flight, airMiles, connections);
+	flights.amount += Math.min(delay, 0);
+
 	lines.push(
 		{
 			id: 'fly.buffer',
@@ -168,12 +175,12 @@ export function buildFly(
 			label: `Arrive early at ${origin.code}: check-in, security, boarding`,
 			amount: buffer,
 		},
-		flightTime(flight, airMiles, connections),
+		flights,
 		{
 			id: 'fly.delay',
 			kind: 'time',
 			label: connections > 0 ? 'Expected delay, both flights' : 'Expected delay',
-			amount: reliability.averageDelayMinutes * (connections + 1),
+			amount: Math.max(delay, 0),
 			...(flight.reliability ? { from: flight.reliability } : {}),
 		},
 		{ id: 'fly.offPlane', kind: 'time', label: 'Off the plane', amount: FLY.offPlaneMinutes },

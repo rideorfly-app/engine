@@ -2,7 +2,7 @@
 
 One-way trips used to check the engine's numbers against what driving and flying really cost and take. The target: each side's door-to-door time within 15% of the real figure, and its total cost within 20%.
 
-A benchmark is only as good as its real figures, so every piece of a real total says how it's known (see Bases below), and the report shows how much of each total was actually observed. A trip that's mostly judgment calls checks the engine's math, not its accuracy. For that reason the set is not a release or merge gate yet. It grows as observed data arrives: DOT's records of real flights now, and users' "How did it go?" reports after launch.
+A benchmark is only as good as its real figures, so every piece of a real total says how it's known (see Bases below), and the report shows how much of each total was actually observed. A trip that's mostly judgment calls checks the engine's math, not its accuracy. For that reason the set is not a launch, release, or merge requirement. It grows as observed data arrives: DOT's records of real flights now, and users' "How did it go?" reports after launch.
 
 Run them with:
 
@@ -118,7 +118,7 @@ Add to this list with every trip, so the next one is quicker and better.
 - **Label every part, and look at the shares.** Before the labels, both trips "passed" while flight times were half guesswork. With them, the report shows that drive times have no observed data at all yet.
 - **DOT's monthly files are the best observed source available now.** They give real flight times, delays, and cancellations for every route, free. Use the same month a year earlier, so the season matches.
 - **Watch for unusual months.** November 2025 included the FAA's flight cuts during the federal shutdown (5.6% of Dallas–Houston flights cancelled), and July 2024 included the CrowdStrike outage (5.2%). Averaging the seasonal change over three years keeps one bad month from skewing the inputs, but a real result from a bad month will still read worse than usual.
-- **Don't use the same data for the inputs and the real result.** At first, Dallas–Houston used November 2025 for both and matched exactly. With inputs from July 2026 plus the seasonal change, the engine lands 7% under a November that ran worse than usual.
+- **Don't use the same data for the inputs and the real result.** At first, Dallas–Houston used November 2025 for both and matched exactly. With inputs from July 2026 plus the seasonal change, the engine lands 5% under a November that ran worse than usual. That estimate is −3.7 minutes (flights usually land early), which the engine now takes off the flight time rather than showing a negative delay.
 - **A connection's real time depends on which one.** Each day's shortest Southwest connection from Omaha to Bozeman is the 6:25 a.m.; the 10:40 a.m. takes about 85 minutes longer. The script uses the shortest, which travel sites quote too.
 - **Rome2Rio's itinerary average was close.** It said 289 minutes for Omaha–Bozeman; DOT's schedules give 267 for the shortest connection. Use DOT.
 - **BTS's CSV quotes city names with commas in them** ("Dallas, TX"). Parse it properly.
@@ -144,7 +144,6 @@ Patterns to confirm across more trips before changing a default. Changing one is
 | Airport meal | GSA lunch × 1.25 | About $18 an adult at a quick-serve counter | Omaha–Bozeman |
 | The delay data job's average | Not built yet | Must count early arrivals: Dallas–Houston averages 9 minutes that way and 17 counting only late flights. Only the first adds up to the real flight time | Dallas–Houston |
 | Delay on a connection | Each flight's delay added (2 × 15 min) | The real connection ran 10 minutes over schedule; the layover absorbs most of the first flight's delay | Omaha–Bozeman |
-| Expected delay below zero | Shown as is: "Expected delay −5 min" | Dallas–Houston's November estimate is −3.7 minutes, since flights usually land early. It's right in the math, but a negative delay line may confuse people; it could be folded into the flight time instead | Dallas–Houston |
 | When flights leave | Not modeled | The shortest connection may be at dawn; the next one can add 1½ hours | Omaha–Bozeman |
 
 ## Coverage

@@ -197,6 +197,23 @@ describe('buildFly', () => {
 		expect(lineValue(fly.lines, 'fly.delay')).toBe(30);
 	});
 
+	it('takes an early-arriving route’s time off the flight, not as a negative delay', () => {
+		const flight = familyFlight();
+		flight.reliability = {
+			source: 'DOT',
+			asOf: '2026-07-31',
+			averageDelayMinutes: -4,
+			delayChance: 0.12,
+			cancelChance: 0.03,
+		};
+
+		const fly = buildFly(familyAnswers(), familyLookups(), flight, settings);
+
+		// 95 scheduled minutes, landing 4 early: 91, rounded to 90.
+		expect(lineValue(fly.lines, 'fly.flights')).toBe(90);
+		expect(lineValue(fly.lines, 'fly.delay')).toBe(0);
+	});
+
 	it('prices the solo trip’s rideshare and transit', () => {
 		const lookups = soloLookups();
 		const fly = buildFly(soloAnswers(), lookups, lookups.flight as FlightLookups, settings);
