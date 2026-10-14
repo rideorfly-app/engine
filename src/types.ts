@@ -309,6 +309,9 @@ export interface Line {
 
 	source: SourceTag;
 
+	/** A line we don't estimate, such as tolls, shown empty until the user fills it in. */
+	empty?: boolean;
+
 	/** For the tooltip, such as "Travelpayouts" and the date its price is from. */
 	sourceName?: string;
 	asOf?: IsoDate;
