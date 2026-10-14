@@ -197,6 +197,7 @@ function rideSide(answers: Answers, lookups: Lookups, draft: RideDraft, lines: L
 		straightThrough: draft.straightThrough,
 		nightDrivingMinutes: draft.plan.nightMinutes * scale,
 		arrival: draft.plan.arrival + (minutes - draftMinutes),
+		maxDrivingHours: draft.maxDrivingHours,
 		gasPrice: draft.gasPrice,
 		mpg: draft.mpg,
 	};

@@ -31,6 +31,14 @@ export { PREFERENCE_LABELS, preferenceLabel, preferenceLabelIndex } from './pref
 export { roundCost, roundMinutes } from './rounding';
 export { score } from './score';
 export { GAS_REGION_BY_STATE, isSupportedState } from './states';
+export { checkTake, type TakeCheck, type TakeCheckContext } from './take/check';
+export { figuresFor } from './take/figures';
+export { fillTake, fillText } from './take/fill';
+export { buildTakeInput, type TakeInput, type TakeInputOptions } from './take/input';
+export { TAKE_PROMPT, TAKE_PROMPT_VERSION } from './take/prompt';
+export { TAKE_SCHEMA } from './take/schema';
+export { writtenFromNumbers } from './take/summary';
+export type * from './take/types';
 export type * from './types';
 export type * from './units';
 export {

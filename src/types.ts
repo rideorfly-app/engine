@@ -348,6 +348,9 @@ export interface RideSide extends Side {
 	nightDrivingMinutes: Minutes;
 	arrival: ClockMinutes;
 
+	/** The daily driving limit the drive was laid out with. */
+	maxDrivingHours: Hours;
+
 	/** The gas price and fuel economy the drive was scored with. mpg is null for a rental. */
 	gasPrice: Dollars;
 	mpg: number | null;

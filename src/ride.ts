@@ -23,6 +23,7 @@ export interface RideDraft {
 	/** Whether the drive passes the daily limit, so the hotel question applies. */
 	overLimit: boolean;
 
+	maxDrivingHours: Hours;
 	gasPrice: Dollars;
 	mpg: number | null;
 }
@@ -217,6 +218,7 @@ export function buildRide(answers: Answers, lookups: Lookups, settings: Settings
 		nights,
 		straightThrough,
 		overLimit,
+		maxDrivingHours: settings.maxDrivingHours,
 		gasPrice,
 		mpg: answers.car.kind === 'own' ? (settings.mpg ?? answers.car.mpg) : null,
 	};
