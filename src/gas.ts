@@ -3,7 +3,7 @@ import type { Lookups } from './types';
 import type { Dollars, Miles, StateCode } from './units';
 
 /** Regular gas in one state, from its EIA region, or the national price if the region's missing. */
-export function stateGasPrice(lookups: Lookups, state: StateCode): Dollars {
+export function stateGasPrice(lookups: Pick<Lookups, 'gas'>, state: StateCode): Dollars {
 	const region = GAS_REGION_BY_STATE[state];
 	const price = region ? lookups.gas.byRegion[region] : undefined;
 

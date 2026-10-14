@@ -25,9 +25,12 @@ export interface FlyDraft {
 	cancelChance: number;
 }
 
+/** The rates the Fly side needs. It doesn't depend on the drive. */
+export type FlyRates = Pick<Lookups, 'gas' | 'perDiem' | 'rental'>;
+
 export function buildFly(
 	answers: Answers,
-	lookups: Lookups,
+	lookups: FlyRates,
 	flight: FlightLookups,
 	settings: Settings,
 ): FlyDraft {

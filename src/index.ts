@@ -6,9 +6,28 @@
  * no clock, no randomness, and no affiliate data.
  */
 
+export {
+	type NearbyAirport,
+	nearbyAirports,
+	type PairCandidate,
+	type RankedPair,
+	rankAirportPairs,
+	tooCloseToFly,
+} from './airports';
+export {
+	type Change,
+	type Comparison,
+	compare,
+	type Difference,
+	type LineDifference,
+	meaningfulChanges,
+	type SideComparison,
+	type Snapshot,
+} from './compare';
 export * from './defaults';
 export * from './format';
 export { straightLineMiles } from './geo';
+export { PREFERENCE_LABELS, preferenceLabel, preferenceLabelIndex } from './preference';
 export { roundCost, roundMinutes } from './rounding';
 export { score } from './score';
 export { GAS_REGION_BY_STATE, isSupportedState } from './states';
