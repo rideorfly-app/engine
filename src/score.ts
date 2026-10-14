@@ -197,6 +197,8 @@ function rideSide(answers: Answers, lookups: Lookups, draft: RideDraft, lines: L
 		straightThrough: draft.straightThrough,
 		nightDrivingMinutes: draft.plan.nightMinutes * scale,
 		arrival: draft.plan.arrival + (minutes - draftMinutes),
+		gasPrice: draft.gasPrice,
+		mpg: draft.mpg,
 	};
 }
 
@@ -213,6 +215,12 @@ function flySide(answers: Answers, lookups: Lookups, draft: FlyDraft, lines: Lin
 
 	const flight = lookups.flight;
 
+	// Once the user edits the fares line, the fare per person follows it.
+	const fares = lines.find((line) => line.id === 'fly.fares');
+	const travelers = answers.adults + answers.children;
+	const farePerPerson =
+		fares && fares.value !== fares.ours.value ? fares.value / travelers : draft.farePerPerson;
+
 	return {
 		side: 'fly',
 		lines,
@@ -224,6 +232,7 @@ function flySide(answers: Answers, lookups: Lookups, draft: FlyDraft, lines: Lin
 		destination: flight?.destination.code ?? '',
 		connections: draft.connections,
 		arrival: START_TIME + minutes,
+		farePerPerson,
 	};
 }
 

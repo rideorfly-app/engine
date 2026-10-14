@@ -18,6 +18,7 @@ export interface FlyDraft {
 	lines: DraftLine[];
 	connections: number;
 	arrival: ClockMinutes;
+	farePerPerson: Dollars;
 
 	/** For comfort: the reliability figures the flight was scored with. */
 	delayChance: number;
@@ -40,6 +41,7 @@ export function buildFly(
 	const connections = flight.fare?.stops ?? (flight.schedule ? 0 : 1);
 	const airMiles = straightLineMiles(origin, destination);
 	const reliability = flight.reliability ?? FLY.fallbackReliability;
+	const farePerPerson = flight.fare?.perPerson ?? estimatedFare(airMiles, connections);
 
 	if (flight.fare) {
 		lines.push({
@@ -50,13 +52,11 @@ export function buildFly(
 			from: flight.fare,
 		});
 	} else {
-		const perPerson = estimatedFare(airMiles, connections);
-
 		lines.push({
 			id: 'fly.fares',
 			kind: 'cost',
-			label: `Fares · ${travelers} × ${formatMoney(perPerson)}, estimated (no recent fare found)`,
-			amount: perPerson * travelers,
+			label: `Fares · ${travelers} × ${formatMoney(farePerPerson)}, estimated (no recent fare found)`,
+			amount: farePerPerson * travelers,
 		});
 	}
 
@@ -287,6 +287,7 @@ export function buildFly(
 		lines: lines.map((spec) => draftLine('fly', spec)),
 		connections,
 		arrival,
+		farePerPerson,
 		delayChance: reliability.delayChance,
 		cancelChance: reliability.cancelChance,
 	};

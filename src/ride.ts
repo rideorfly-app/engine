@@ -11,7 +11,7 @@ import { routeGasPrice } from './gas';
 import { type DraftLine, draftLine, type LineSpec } from './lines';
 import type { Settings } from './settings';
 import type { Answers, Lookups } from './types';
-import type { Hours, Minutes } from './units';
+import type { Dollars, Hours, Minutes } from './units';
 
 export interface RideDraft {
 	lines: DraftLine[];
@@ -22,6 +22,9 @@ export interface RideDraft {
 
 	/** Whether the drive passes the daily limit, so the hotel question applies. */
 	overLimit: boolean;
+
+	gasPrice: Dollars;
+	mpg: number | null;
 }
 
 /** Nights on the road: the driving hours ÷ the daily limit, rounded up, minus one. */
@@ -214,6 +217,8 @@ export function buildRide(answers: Answers, lookups: Lookups, settings: Settings
 		nights,
 		straightThrough,
 		overLimit,
+		gasPrice,
+		mpg: answers.car.kind === 'own' ? (settings.mpg ?? answers.car.mpg) : null,
 	};
 }
 

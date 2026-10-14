@@ -347,6 +347,10 @@ export interface RideSide extends Side {
 	straightThrough: boolean;
 	nightDrivingMinutes: Minutes;
 	arrival: ClockMinutes;
+
+	/** The gas price and fuel economy the drive was scored with. mpg is null for a rental. */
+	gasPrice: Dollars;
+	mpg: number | null;
 }
 
 export interface FlySide extends Side {
@@ -355,6 +359,9 @@ export interface FlySide extends Side {
 	destination: string;
 	connections: number;
 	arrival: ClockMinutes;
+
+	/** The fare per person: the cached or estimated one, or the user's total ÷ travelers once edited. */
+	farePerPerson: Dollars;
 }
 
 export type Verdict = 'ride' | 'fly';
