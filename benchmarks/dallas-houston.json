@@ -1,0 +1,239 @@
+{
+	"id": "dallas-houston",
+	"title": "Dallas to Houston, alone, on a Tuesday in November",
+	"covers": "Short drive, two medium airports, a cheap and frequent nonstop",
+	"gatheredOn": "2026-10-14",
+	"gatheredBy": "Claude",
+	"answers": {
+		"from": {
+			"id": "4819000",
+			"name": "Dallas",
+			"state": "TX",
+			"lat": 32.777,
+			"lon": -96.797
+		},
+		"to": {
+			"id": "4835000",
+			"name": "Houston",
+			"state": "TX",
+			"lat": 29.76,
+			"lon": -95.369
+		},
+		"date": "2026-11-03",
+		"adults": 1,
+		"children": 0,
+		"car": {
+			"kind": "own",
+			"mpg": 30
+		},
+		"toAirport": {
+			"mode": "dropoff"
+		},
+		"fromAirport": "pickup",
+		"checkedBags": 0,
+		"pets": 0,
+		"preference": 0
+	},
+	"lookups": {
+		"drive": {
+			"source": "OSRM (OpenStreetMap contributors)",
+			"asOf": "2026-10-14",
+			"miles": 238.5,
+			"minutes": 254,
+			"milesByState": {
+				"TX": 238.5
+			},
+			"winterPasses": [],
+			"midpoint": {
+				"lat": 31.73,
+				"lon": -96.18
+			}
+		},
+		"flight": {
+			"origin": {
+				"code": "DAL",
+				"name": "Dallas Love Field",
+				"size": "medium",
+				"lat": 32.847,
+				"lon": -96.851
+			},
+			"destination": {
+				"code": "HOU",
+				"name": "Houston Hobby",
+				"size": "medium",
+				"lat": 29.645,
+				"lon": -95.278
+			},
+			"toOrigin": {
+				"source": "OSRM (OpenStreetMap contributors)",
+				"asOf": "2026-10-14",
+				"miles": 6.1,
+				"minutes": 14
+			},
+			"fromDestination": {
+				"source": "OSRM (OpenStreetMap contributors)",
+				"asOf": "2026-10-14",
+				"miles": 13.2,
+				"minutes": 25
+			},
+			"fare": {
+				"source": "southwest.com route page (Basic fare)",
+				"asOf": "2026-10-14",
+				"perPerson": 114,
+				"minutes": 72,
+				"stops": 0
+			},
+			"schedule": {
+				"source": "DOT on-time records, July 2026",
+				"asOf": "2026-07-31",
+				"minutes": 75
+			},
+			"reliability": {
+				"source": "DOT on-time records: July 2026, plus the average July-to-November change in 2023–2025",
+				"asOf": "2026-07-31",
+				"averageDelayMinutes": -3.7,
+				"delayChance": 0.117,
+				"cancelChance": 0.028
+			}
+		},
+		"gas": {
+			"source": "EIA",
+			"asOf": "2026-10-12",
+			"byRegion": {
+				"gulf-coast": 3.851
+			},
+			"national": 4.331
+		},
+		"perDiem": {
+			"source": "GSA FY2027",
+			"asOf": "2026-10-01",
+			"start": {
+				"lunch": 22,
+				"lodging": 184
+			},
+			"destination": {
+				"lunch": 22,
+				"lodging": 133
+			}
+		},
+		"rental": {
+			"source": "Not used: own car",
+			"asOf": "2026-10-14",
+			"start": 55,
+			"destination": 55
+		},
+		"roadSafety": {
+			"source": "IIHS from FARS, 2024",
+			"asOf": "2026-06-01",
+			"byState": {
+				"TX": 1.35
+			},
+			"national": 1.19
+		},
+		"utcOffsetMinutes": -360,
+		"dataVersion": "benchmark"
+	},
+	"actual": {
+		"ride": {
+			"time": [
+				{
+					"what": "Driving",
+					"amount": 254,
+					"basis": "average",
+					"source": "OSRM (OpenStreetMap contributors), 2026-10-14"
+				},
+				{
+					"what": "One short stop on a four-hour drive",
+					"amount": 15,
+					"basis": "judgment",
+					"source": "Claude's call"
+				}
+			],
+			"cost": [
+				{
+					"what": "Gas: 238.5 mi ÷ 30 mpg × $3.851",
+					"amount": 30.62,
+					"basis": "price",
+					"source": "EIA Gulf Coast regular, 2026-10-12"
+				},
+				{
+					"what": "Tires, maintenance, and repair: 238.5 mi × 11.04¢",
+					"amount": 26.33,
+					"basis": "average",
+					"source": "AAA Your Driving Costs, 2025"
+				},
+				{
+					"what": "Lunch on the road, since the drive runs past noon",
+					"amount": 22,
+					"basis": "average",
+					"source": "GSA FY2027, $80 M&IE tier"
+				},
+				{
+					"what": "Snacks and drinks",
+					"amount": 5,
+					"basis": "judgment",
+					"source": "Claude's call"
+				}
+			]
+		},
+		"fly": {
+			"time": [
+				{
+					"what": "Door to DAL",
+					"amount": 14,
+					"basis": "average",
+					"source": "OSRM (OpenStreetMap contributors), 2026-10-14"
+				},
+				{
+					"what": "At DAL before departure: no bags, medium airport",
+					"amount": 75,
+					"basis": "judgment",
+					"source": "Claude's call"
+				},
+				{
+					"what": "Scheduled departure to actual arrival, Southwest DAL–HOU, average of 305 flights",
+					"amount": 81,
+					"basis": "observed",
+					"source": "DOT on-time records, November 2025"
+				},
+				{
+					"what": "Off the plane and to the curb",
+					"amount": 15,
+					"basis": "judgment",
+					"source": "Claude's call"
+				},
+				{
+					"what": "HOU to door",
+					"amount": 25,
+					"basis": "average",
+					"source": "OSRM (OpenStreetMap contributors), 2026-10-14"
+				}
+			],
+			"cost": [
+				{
+					"what": "Southwest Basic fare for 2026-11-03, shown 2026-10-14",
+					"amount": 114,
+					"basis": "price",
+					"source": "southwest.com"
+				},
+				{
+					"what": "A friend's gas for the drop-off and pickup round trips: 38.6 mi ÷ 25 mpg × $3.851",
+					"amount": 5.96,
+					"basis": "price",
+					"source": "EIA Gulf Coast regular, 2026-10-12; miles from OSRM"
+				},
+				{
+					"what": "Snacks and drinks",
+					"amount": 5,
+					"basis": "judgment",
+					"source": "Claude's call"
+				}
+			]
+		}
+	},
+	"notes": [
+		"The real flight time is DOT's record of the same month a year earlier (November 2025, all 305 flights flown), since the trip's own month hasn't happened. That month included the FAA's flight cuts during the federal shutdown, so it ran worse than usual: 5.6% cancelled, against 0.3% and 1.5% in the two Novembers before.",
+		"The engine's inputs use only data published before the trip: DOT's newest month (July 2026), adjusted by how delays changed from July to November in 2023–2025, averaged. That gives an average arrival delay of −3.7 minutes (flights usually land a little early in November), counting early arrivals, as the plan's Delay figures section asks.",
+		"Real costs are counted on the engine's basis: gas, wear, meals, and snacks for the drive; fare, ground rides, and snacks for the flight. Depreciation is left out, as the engine leaves it off by default."
+	]
+}

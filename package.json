@@ -1,0 +1,47 @@
+{
+	"name": "@rideorfly/engine",
+	"version": "0.1.0",
+	"description": "The open-source scoring engine behind Ride or Fly: drive or fly, weighed on time, cost, and comfort.",
+	"license": "Apache-2.0",
+	"author": "Caleb Stauffer",
+	"homepage": "https://github.com/rideorfly-app/engine#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/rideorfly-app/engine.git"
+	},
+	"bugs": "https://github.com/rideorfly-app/engine/issues",
+	"type": "module",
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"types": "./dist/types/index.d.ts",
+			"default": "./dist/engine.min.js"
+		}
+	},
+	"files": [
+		"dist",
+		"NOTICE"
+	],
+	"scripts": {
+		"build": "node scripts/build.mjs",
+		"prepare": "npm run build",
+		"check": "biome check .",
+		"format": "biome check --write .",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"coverage": "vitest run --coverage",
+		"verify": "npm run check && npm run typecheck && npm test && npm run build && npm run smoke",
+		"smoke": "node scripts/smoke.mjs",
+		"benchmarks": "node scripts/benchmarks.mjs",
+		"try": "npm run build --silent && node scripts/try.mjs"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.5.15",
+		"@types/node": "24.19.2",
+		"@vitest/coverage-v8": "5.0.4",
+		"esbuild": "0.28.2",
+		"typescript": "7.0.2",
+		"vitest": "5.0.4"
+	}
+}
