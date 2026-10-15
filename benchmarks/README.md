@@ -24,6 +24,7 @@ Each trip is one JSON file, named after its route (`dallas-houston.json`).
 | `gatheredOn`, `gatheredBy` | When the figures were collected, and by whom |
 | `answers` | The trip as a user would answer the questions |
 | `lookups` | What the app would have fetched, from public sources, each with `source` and `asOf` |
+| `edits` | Optional. Changes the traveler would make in the workbench, such as switching off a second car they don't need, in the engine's `Edits` shape. Say why in `notes` |
 | `actual` | For each side, `time` and `cost` as lists of parts. The real total is their sum |
 | `notes` | Gaps, judgment calls, and anything a later reader should know |
 
@@ -108,6 +109,9 @@ These change rarely, so later trips can reuse them until they're out of date.
 | Road deaths per 100 million miles | US 1.19; TX 1.35; NE 1.15; IA 1.05; SD 1.40; WY 1.10; MT 1.49 | IIHS from FARS, 2024 (posted June 2026) |
 | Southwest checked bags | $45 first, $55 second | Southwest, from 2026-04-09 |
 | GSA per diem used so far | Dallas $184; Houston $133; Omaha $128; Spearfish, SD $113; Bozeman $169 (lodging); all $80 M&IE | GSA FY2027 |
+| GSA standard rate (most small towns) | $110 lodging; $68 M&IE, so $19 lunch | GSA FY2026 |
+| Road deaths, more states | GA 1.15; TN 1.52; FL 1.26 | IIHS from FARS, 2024 (posted June 2026) |
+| EIA regular gasoline, week of 2026-07-06 | Lower Atlantic $3.562; Midwest $3.531; US $3.777. Lower Atlantic diesel $4.477 | EIA weekly retail prices |
 
 ## Lessons so far
 
@@ -129,6 +133,10 @@ Add to this list with every trip, so the next one is quicker and better.
 - **Prefer one source for a whole table.** IIHS covers every state's road death rate in one place, GSA's API covers every city's rates, and EIA covers every gas region; that's quicker and more consistent than searching state by state.
 - **Bag fees move.** Southwest started charging in 2025 and raised fees in April 2026. Check the airline's current fee for each trip.
 - **Skip web searches for "how early to arrive."** The results are mostly spam pages.
+- **A real trip is worth more than a hand-built one.** Lookout Mountain–Eustis is the first with observed drive time and receipts. Its time landed within 8.3%; its cost missed by 53%, and the receipts show exactly why, line by line.
+- **Ask how the trip really went, not just the totals.** That trip needed follow-up questions to count correctly: the van was a six-day round-trip rental (no drop fee, one day counted), and the gas was two fill-ups, since the one on the way alone implied an impossible 26 mpg for a loaded van.
+- **EIA's history pages can be fetched.** `eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=SERIES&f=W` gives a series' weekly prices as an HTML table: `EMM_EPMR_PTE_R1Z_DPG` (Lower Atlantic regular), `EMM_EPMR_PTE_R20_DPG` (Midwest), `EMM_EPMR_PTE_NUS_DPG` (US), `EMD_EPD2D_PTE_R1Z_DPG` (Lower Atlantic diesel). GSA's API also answers by ZIP code (`/rates/zip/30750/year/2026`), and Census's ZCTA gazetteer gives every ZIP code's center.
+- **Kayak's rental pages can't be scripted.** Gather a city's rental average by hand, or leave a placeholder and say so.
 - **Cost:** Dallas–Houston took about 20,000 Claude tokens; Omaha–Bozeman about 35,000, since a long, multi-state trip with a family has more pieces. With the route helper and reference figures, expect 20,000 to 30,000 a trip.
 
 ## What the trips suggest for tuning
@@ -140,7 +148,11 @@ Patterns to confirm across more trips before changing a default. Changing one is
 | `DRIVE.wearPerMile` | 10¢ | AAA says 11.04¢ | Both |
 | `FLY.checkedBagFee` | $35 | Southwest charges $45 since April 2026 | Omaha–Bozeman |
 | Hotel breakfast | Counted as a meal | Usually free at mid-range hotels | Omaha–Bozeman: ride cost +10.6%, most of it this |
-| `DRIVE.mealStopMinutes` | 30 | 45 with children seems more realistic | Omaha–Bozeman |
+| `DRIVE.mealStopMinutes` | 30 | 45 with children seems more realistic; a real group of eight took about an hour | Omaha–Bozeman; Lookout Mountain–Eustis |
+| Road meal (GSA lunch, $19 here) | $19 an adult, two-thirds a child | A real group of eight spent about $7.70 a person a meal: $123 against the engine's $255 | Lookout Mountain–Eustis |
+| Passenger vans | A second car above five travelers; regular gas at 30 mpg; the average car's rental rate | One 15-passenger diesel van: about 15.5 mpg on diesel ($4.48 against $3.56 regular), about $92 a day. Fuel came in at $160 against the engine's $65 | Lookout Mountain–Eustis |
+| One-way drop fee | Always $150 with a rental | A drive that's one leg of a round-trip rental has none | Lookout Mountain–Eustis |
+| Long-day comfort | −0.4 an hour over 4 | An 11-hour drive costs Ride 2.8 points, about what the strongest travel preference adds (1.5), so a group that chose to drive, with an anxious flyer at full Ride, only just leans Ride (0.06 overall, against 0.05 for a toss-up) | Lookout Mountain–Eustis |
 | Airport meal | GSA lunch × 1.25 | About $18 an adult at a quick-serve counter | Omaha–Bozeman |
 | The delay data job's average | Not built yet | Must count early arrivals: Dallas–Houston averages 9 minutes that way and 17 counting only late flights. Only the first adds up to the real flight time | Dallas–Houston |
 | Delay on a connection | Each flight's delay added (2 × 15 min) | The real connection ran 10 minutes over schedule; the layover absorbs most of the first flight's delay | Omaha–Bozeman |
@@ -190,5 +202,6 @@ More hand-built trips are paused at two: without observed data behind them, more
 | 20 | San Diego → Salt Lake City | Straight through chosen | |
 | 21 | Kansas City → St. Louis | Short; rideshare to the airport for four | |
 | 22 | Denver → Albuquerque | Raton Pass; medium airports | |
+| 23 | Lookout Mountain, GA → Eustis, FL | A real trip: group of eight in one rented diesel van; straight through, shared driving; summer; small airports | Done |
 
 Real trips from friends and family should replace or join these whenever someone has one.

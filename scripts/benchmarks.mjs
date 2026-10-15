@@ -48,7 +48,7 @@ function check(kind, estimate, parts, file) {
 
 for (const file of files) {
 	const trip = JSON.parse(readFileSync(new URL(file, dir), 'utf8'));
-	const result = score(trip.answers, trip.lookups);
+	const result = score(trip.answers, trip.lookups, trip.edits);
 	console.log(`\n${trip.id}: ${trip.title}`);
 
 	for (const side of ['ride', 'fly']) {
