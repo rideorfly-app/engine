@@ -91,7 +91,7 @@ You'll need Node 24 (see `.nvmrc`).
 
 | Task | Command |
 | --- | --- |
-| Install | `npm install` |
+| Install (also builds `dist/engine.min.js`) | `npm install` |
 | Run the tests | `npm test` |
 | See which lines the tests never reach | `npm run coverage` |
 | Check formatting and lint | `npm run check` (`npm run format` fixes what it can) |

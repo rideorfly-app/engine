@@ -54,7 +54,7 @@ The owner is a web developer who builds custom WordPress themes and plugins. Inf
 
 | Task | Command |
 | --- | --- |
-| Install | `npm install` |
+| Install (also builds, through `prepare`) | `npm install` |
 | Tests | `npm test` |
 | Tests with the coverage report | `npm run coverage` |
 | Format and lint (fix with `npm run format`) | `npm run check` |
