@@ -20,8 +20,8 @@ It's a pure function. The same inputs always give the same result, and it never 
 | Default assumptions | The starting values the engine uses when there's no data, each one editable on the site |
 | Our take prompt | The exact prompt sent to the AI, with its version |
 | Test matchups and benchmark trips | Sample trips with expected results, and real trips used to check the engine's accuracy |
-| Data jobs | Monthly and yearly scripts that turn public data (such as DOT flight records) into the files the engine reads |
-| Reports and posts | A site at open.rideorfly.app (coming), with monthly accuracy reports |
+
+The public data the app passes in, such as DOT flight history and gas prices, comes from a separate public `data` repo (coming), along with a monthly accuracy report on the engine's flight-time estimates. Reports are announced in the organization's GitHub Discussions.
 
 ## Using it
 
@@ -64,7 +64,7 @@ Test data is made up. It never comes from Google, whose route results can't be s
 
 ## Checking the live site
 
-Once releases begin, each one is built by GitHub Actions and published to npm with provenance, which links the package to the exact commit it was built from. Ride or Fly will serve that file unchanged and list its version and hash on its Verify page, so anyone can compare the code running on the site with the code here.
+Once releases begin, each one is built by GitHub Actions, attached to its GitHub release, and published to npm with provenance, which links the package to the exact commit it was built from. Ride or Fly will serve that file unchanged and list its version and hash on its Verify page, so anyone can compare the code running on the site with the code here.
 
 ## License
 
