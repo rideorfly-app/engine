@@ -33,8 +33,10 @@ describe('score: the family trip', () => {
 		expect(result.leans.overall).toBeCloseTo(0.105, 2);
 	});
 
-	it('records the engine version', () => {
+	it('records the engine, prompt, and data versions', () => {
 		expect(result.engineVersion).toMatch(/^\d+\.\d+\.\d+$/);
+		expect(result.promptVersion).toBe('take-v1');
+		expect(result.dataVersion).toBe('2026-10-14');
 	});
 });
 

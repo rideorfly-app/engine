@@ -13,6 +13,7 @@ import { type DraftLine, totalOf } from './lines';
 import { notesFor } from './notes';
 import { buildRide, type RideDraft } from './ride';
 import type { Settings } from './settings';
+import { TAKE_PROMPT_VERSION } from './take/prompt';
 import type {
 	Answers,
 	Assumptions,
@@ -72,6 +73,8 @@ export function score(answers: Answers, lookups: Lookups, edits: Edits = {}): Re
 
 	const result: Result = {
 		engineVersion: ENGINE_VERSION,
+		promptVersion: TAKE_PROMPT_VERSION,
+		dataVersion: lookups.dataVersion,
 		ride,
 		fly,
 		weights,

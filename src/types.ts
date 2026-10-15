@@ -230,6 +230,9 @@ export interface Lookups {
 	 * for Mountain Standard Time. The whole trip runs on the start's clock.
 	 */
 	utcOffsetMinutes: number;
+
+	/** The `data` release the lookups were loaded from, such as "2026-10-14". */
+	dataVersion: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -398,7 +401,10 @@ export interface Note {
 }
 
 export interface Result {
+	/** The three versions behind every result: the formulas, the Our take prompt, and the data. */
 	engineVersion: string;
+	promptVersion: string;
+	dataVersion: string;
 
 	ride: RideSide;
 

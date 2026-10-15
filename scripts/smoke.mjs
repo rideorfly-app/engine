@@ -46,6 +46,7 @@ const lookups = {
 	rental: { source: 'Sample', asOf: '2026-09-01', start: 55, destination: 55 },
 	roadSafety: { source: 'Sample', asOf: '2026-06-01', byState: {}, national: 1.26 },
 	utcOffsetMinutes: -420,
+	dataVersion: 'sample',
 };
 
 const result = engine.score(answers, lookups);

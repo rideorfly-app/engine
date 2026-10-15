@@ -84,6 +84,7 @@ export function familyLookups(overrides: Partial<Lookups> = {}): Lookups {
 			national: 1.26,
 		},
 		utcOffsetMinutes: -420,
+		dataVersion: '2026-10-14',
 		...overrides,
 	};
 }
@@ -154,6 +155,7 @@ export function soloLookups(overrides: Partial<Lookups> = {}): Lookups {
 			national: 1.26,
 		},
 		utcOffsetMinutes: -360,
+		dataVersion: '2026-10-14',
 		...overrides,
 	};
 }

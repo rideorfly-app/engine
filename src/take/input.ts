@@ -29,6 +29,7 @@ export function buildTakeInput(
 	return {
 		prompt_version: TAKE_PROMPT_VERSION,
 		engine_version: ENGINE_VERSION,
+		data_version: lookups.dataVersion,
 
 		matchup: {
 			from: `${answers.from.name}, ${answers.from.state}`,
