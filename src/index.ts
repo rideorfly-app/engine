@@ -25,6 +25,13 @@ export {
 	type Snapshot,
 } from './compare';
 export * from './defaults';
+export {
+	type DelayEstimate,
+	type DelayMethod,
+	expectedDelay,
+	type FlightHistory,
+	type FlightMonth,
+} from './delay';
 export * from './format';
 export { straightLineMiles } from './geo';
 export { PREFERENCE_LABELS, preferenceLabel, preferenceLabelIndex } from './preference';

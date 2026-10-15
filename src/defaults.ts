@@ -223,6 +223,24 @@ export const VERDICT = {
 	evenWithin: 0.04,
 } as const;
 
+/*
+ * Working out a route's expected delay for the month of travel from DOT's
+ * monthly records, which arrive about two months late. See src/delay.ts.
+ */
+export const DELAY = {
+	/** The seasonal change is averaged over this many past years ... */
+	seasonYears: 3,
+
+	/** ... skipping these, so one unusual year doesn't skew it. */
+	skipYears: [2020] as readonly number[],
+
+	/** ... looking back no further than this for them. */
+	lookBackYears: 6,
+
+	/** A route with fewer flights than this in its newest month borrows its airports' seasonal pattern. */
+	thinRouteFlights: 100,
+} as const;
+
 export const AIRPORTS = {
 	/** Candidates are airports with passenger service within this distance of each end. */
 	searchRadiusMiles: 100,

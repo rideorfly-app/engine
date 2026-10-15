@@ -13,4 +13,6 @@ The first version of the engine.
 - The user's edits, Ours vs. Yours, and meaningful changes.
 - Airport ranking and the too-close-to-fly check.
 - The expected delay never goes below zero. DOT's average counts early arrivals, so when a route's flights usually land early, the time saved comes off the flight time instead.
+- The expected delay for the month of travel, from DOT's monthly rows: the route's newest month plus its seasonal change, averaged over three past years and skipping 2020. A route with fewer than 100 flights in its newest month borrows its airports' seasonal pattern, or the nation's. The newest month alone and the same month last year are offered too, for the accuracy report to compare.
+- Every result carries the engine, prompt, and data versions.
 - Our take: prompt `take-v1`, its input, named figures, the output check, and the code-written summary.

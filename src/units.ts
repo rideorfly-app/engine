@@ -23,6 +23,9 @@ export type Chance = number;
 /** A calendar date, `YYYY-MM-DD`, in the traveler's local time. */
 export type IsoDate = string;
 
+/** A calendar month, `YYYY-MM`. */
+export type YearMonth = string;
+
 /** A two-letter USPS code, such as `CO`. DC counts as a state here. */
 export type StateCode = string;
 

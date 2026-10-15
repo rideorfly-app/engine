@@ -35,6 +35,7 @@ The owner is a web developer who builds custom WordPress themes and plugins. Inf
 | `src/clock.ts`, `src/sun.ts` | The 8:00 a.m. travel clock: stops, meals, night driving |
 | `src/comfort.ts`, `src/verdict.ts` | Comfort adjustments, leans, verdict, confidence |
 | `src/compare.ts` | Ours vs. Yours, and meaningful changes |
+| `src/delay.ts` | The expected delay for the month of travel, from DOT's monthly rows (the row format `data` publishes) |
 | `src/airports.ts` | Ranking airport pairs; too close to fly |
 | `src/notes.ts` | "You'd have missed this" notes |
 | `src/validate.ts` | Ranges for answers and assumptions |
