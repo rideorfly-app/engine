@@ -23,7 +23,44 @@ It's a pure function. The same inputs always give the same result, and it never 
 
 The public data the app passes in, such as DOT flight history and gas prices, comes from a separate public `data` repo (coming), along with a monthly accuracy report on the engine's flight-time estimates. Reports and other news are announced at [open.rideorfly.app](https://open.rideorfly.app), the organization's GitHub Discussions.
 
-## Using it
+## Try it
+
+You'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org) 24. The repo's `.nvmrc` names the version, so with nvm, `nvm use` picks it.
+
+1. **Get the code and install what it needs:**
+
+   ```sh
+   git clone https://github.com/rideorfly-app/engine.git
+   cd engine
+   npm install
+   ```
+
+2. **Run the tests**, to check everything works on your machine:
+
+   ```sh
+   npm test
+   ```
+
+3. **Score the sample trip**, Denver to Sandy, Utah, for a family of four:
+
+   ```sh
+   npm run try
+   ```
+
+   It prints every cost and time line for each side, each side's comfort breakdown, how each category leans, and the verdict.
+
+4. **Score your own trip.** Copy the sample, change the answers and figures, and run it:
+
+   ```sh
+   cp examples/trip.json my-trip.json
+   npm run try -- my-trip.json
+   ```
+
+   [`examples/README.md`](examples/README.md) explains every field, and how to try the workbench's edits.
+
+## Using it in code
+
+Not on npm yet. Once it is:
 
 ```ts
 import { checkTake, score, validateAnswers } from '@rideorfly/engine';
@@ -60,6 +97,7 @@ You'll need Node 24 (see `.nvmrc`).
 | Check types | `npm run typecheck` |
 | Build `dist/engine.min.js` and print its integrity hash | `npm run build` |
 | Everything CI runs | `npm run verify` |
+| Score a trip from a file (`examples/trip.json` by default) | `npm run try -- my-trip.json` |
 
 Test data is made up. It never comes from Google, whose route results can't be stored.
 

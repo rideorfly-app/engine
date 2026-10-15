@@ -32,7 +32,8 @@
 		"coverage": "vitest run --coverage",
 		"verify": "npm run check && npm run typecheck && npm test && npm run build && npm run smoke",
 		"smoke": "node scripts/smoke.mjs",
-		"benchmarks": "node scripts/benchmarks.mjs"
+		"benchmarks": "node scripts/benchmarks.mjs",
+		"try": "npm run build --silent && node scripts/try.mjs"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.15",

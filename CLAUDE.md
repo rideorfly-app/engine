@@ -47,6 +47,7 @@ The owner is a web developer who builds custom WordPress themes and plugins. Inf
 | `scripts/benchmarks.mjs` | Scores each benchmark trip and compares it to the real figures |
 | `scripts/benchmark-route.mjs` | Gathers a benchmark trip's drive from OpenStreetMap (network; never used by the engine) |
 | `scripts/benchmark-flights.mjs` | Observed flight times and delays for a benchmark trip, from a month of DOT records |
+| `scripts/try.mjs`, `examples/` | Scores a trip from a JSON file and prints the whole comparison; a sample trip and a guide to its fields |
 | `CHANGELOG.md` | What moved in each version |
 
 ## Commands
@@ -61,6 +62,7 @@ The owner is a web developer who builds custom WordPress themes and plugins. Inf
 | Build and print the integrity hash | `npm run build` |
 | Everything CI runs | `npm run verify` |
 | Benchmark trips (after a build) | `npm run benchmarks` |
+| Score a trip from a file | `npm run try -- FILE` |
 
 ## Code style
 
