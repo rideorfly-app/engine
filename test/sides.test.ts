@@ -103,6 +103,23 @@ describe('buildRide', () => {
 		expect(lineValue(ride.lines, 'ride.wear')).toBeUndefined();
 	});
 
+	it('charges a rental for each 24 hours on the road, even straight through', () => {
+		const answers = familyAnswers({ car: { kind: 'rental' } });
+		const lookups = familyLookups();
+		const straight = { ...settings, hotel: false };
+
+		// 15 hours of driving plus stops ends before 8:00 the next morning: one day.
+		lookups.drive.minutes = 15 * 60;
+		expect(lineValue(buildRide(answers, lookups, straight).lines, 'ride.rental')).toBe(65);
+
+		// 22 hours plus stops runs past it: two days, $55 × 1.22 × 2.
+		lookups.drive.minutes = 22 * 60;
+		expect(lineValue(buildRide(answers, lookups, straight).lines, 'ride.rental')).toBe(135);
+
+		// With hotels, the same drive takes three days.
+		expect(lineValue(buildRide(answers, lookups, settings).lines, 'ride.rental')).toBe(200);
+	});
+
 	it('adds a second car above five travelers', () => {
 		const ride = buildRide(familyAnswers({ adults: 4, children: 2 }), familyLookups(), settings);
 

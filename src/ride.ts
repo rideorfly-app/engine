@@ -93,7 +93,9 @@ export function buildRide(answers: Answers, lookups: Lookups, settings: Settings
 
 		carCost = fuel + wear;
 	} else {
-		const days = nights + 1;
+		// A rental is charged by the 24 hours from pickup to drop-off, so a long
+		// drive straight through can run past one day without a hotel night.
+		const days = Math.max(1, Math.ceil((plan.arrival - START_TIME) / (24 * 60)));
 		const rental = lookups.rental.start * DRIVE.rentalTaxesAndFees * days;
 		const fuel = (drive.miles / DRIVE.rentalMpg) * gasPrice;
 
