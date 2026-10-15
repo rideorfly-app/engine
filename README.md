@@ -17,9 +17,10 @@ It's a pure function. The same inputs always give the same result, and it never 
 | Part | What it is |
 | --- | --- |
 | The engine | Line items, scoring, and the verdict, published to npm as `@rideorfly/engine` |
-| Default assumptions | The starting values the engine uses when there's no data, each one editable on the site |
+| Default assumptions | The starting values the engine uses when there's no data. On the site, the user can change any line built from them |
 | Our take prompt | The exact prompt sent to the AI, with its version |
-| Test matchups and benchmark trips | Sample trips with expected results, and real trips used to check the engine's accuracy |
+| Test matchups and benchmark trips | Sample trips with expected results, and trips with real figures used to check the engine's accuracy |
+| A sample trip | `examples/trip.json`, to score with `npm run try` (see Try it) |
 
 The public data the app passes in, such as DOT flight history and gas prices, comes from a separate public `data` repo (coming), along with a monthly accuracy report on the engine's flight-time estimates. Reports and other news are announced at [open.rideorfly.app](https://open.rideorfly.app), the organization's GitHub Discussions.
 

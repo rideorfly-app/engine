@@ -74,7 +74,7 @@ How each part is known, strongest first:
 4. **The fare.** Search the airline's route page or a booking site for the date, by hand. Record the price, the fare type (Basic, Main), the date it was shown, and connections. Southwest's route pages (`southwest.com/en/flights/flights-from-CITY-to-CITY`) carry a dated one-way fare calendar in the page's data; look for `"departureDate"` next to `"totalPrice"`. Pick the trip's date from the dates that have a fare.
 5. **The flight's real length and delays.** Two different sets of months:
    - **The real result** (`actual`): the trip's month a year earlier, since the trip's own month hasn't happened.
-   - **The engine's inputs** (`schedule` and `reliability`): only data published before the trip, worked out the way the plan's "Delay figures" section says. Take DOT's newest month, then add the average change from that month to the trip's month over the last three years. Using the real result's month as an input too would be grading the engine with its own answer key.
+   - **The engine's inputs** (`schedule` and `reliability`): only data published before the trip, worked out the way the plan's "Delay figures" section says. Take DOT's newest month, then add the average change from that month to the trip's month over the last three years. The engine's `expectedDelay()` does this math from the months' figures, the same way the app will. A trip with no real flight to check can use one month's figures and say so in `notes`. Using the real result's month as an input too would be grading the engine with its own answer key.
 
    BTS publishes each month about two to three months late, as a zip of about 30 MB:
 
@@ -119,7 +119,7 @@ Add to this list with every trip, so the next one is quicker and better.
 
 - **Define "real" on the engine's basis first.** The first try counted only gas for the drive and failed by 161%; the engine's fuel line was within 2%.
 - **Meal cost and meal time should agree.** Dallas–Houston counts lunch in the drive's real cost but has no lunch stop in its real time. It still passes, but at +11.5% it's the closest check. A real trip report would settle how long the stop takes.
-- **Label every part, and look at the shares.** Before the labels, both trips "passed" while flight times were half guesswork. With them, the report shows that drive times have no observed data at all yet.
+- **Label every part, and look at the shares.** Before the labels, both trips "passed" while flight times were half guesswork. With them, the report showed that drive times had no observed data at all, until the first real trip (Lookout Mountain–Eustis) brought a traveler's own times.
 - **DOT's monthly files are the best observed source available now.** They give real flight times, delays, and cancellations for every route, free. Use the same month a year earlier, so the season matches.
 - **Watch for unusual months.** November 2025 included the FAA's flight cuts during the federal shutdown (5.6% of Dallas–Houston flights cancelled), and July 2024 included the CrowdStrike outage (5.2%). Averaging the seasonal change over three years keeps one bad month from skewing the inputs, but a real result from a bad month will still read worse than usual.
 - **Don't use the same data for the inputs and the real result.** At first, Dallas–Houston used November 2025 for both and matched exactly. With inputs from July 2026 plus the seasonal change, the engine lands 5% under a November that ran worse than usual. That estimate is −3.7 minutes (flights usually land early), which the engine now takes off the flight time rather than showing a negative delay.
@@ -162,7 +162,7 @@ Patterns to confirm across more trips before changing a default. Changing one is
 
 Twenty trips that test the same thing are worth less than five that don't. Each new trip should add something on this list that the set doesn't have yet.
 
-More hand-built trips are paused at two: without observed data behind them, more trips mostly add judgment calls. The set grows again with real trips (from users' "How did it go?" reports, or anyone's own trip with times and receipts), or when a new source makes a part observable, such as drive times.
+Hand-built trips are paused at two: without observed data behind them, more trips mostly add judgment calls. The set now grows with real trips (from users' "How did it go?" reports, or anyone's own trip with times and receipts), or when a new source makes a part observable, such as drive times.
 
 | Dimension | Values to cover |
 | --- | --- |
