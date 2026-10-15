@@ -55,6 +55,7 @@ You'll need Node 24 (see `.nvmrc`).
 | --- | --- |
 | Install | `npm install` |
 | Run the tests | `npm test` |
+| See which lines the tests never reach | `npm run coverage` |
 | Check formatting and lint | `npm run check` (`npm run format` fixes what it can) |
 | Check types | `npm run typecheck` |
 | Build `dist/engine.min.js` and print its integrity hash | `npm run build` |

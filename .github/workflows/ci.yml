@@ -22,7 +22,18 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run typecheck
-      - run: npm test
+      # The tests, plus which lines of the engine they never reach, shown on
+      # the run's summary page. Coverage is a report for review, not a pass mark.
+      - name: Tests and coverage
+        run: |
+          npm run coverage
+          {
+            echo '### Coverage'
+            echo '```'
+            cat coverage/coverage.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - run: npm run build
       - run: npm run smoke
 
