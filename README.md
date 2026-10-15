@@ -21,7 +21,7 @@ It's a pure function. The same inputs always give the same result, and it never 
 | Our take prompt | The exact prompt sent to the AI, with its version |
 | Test matchups and benchmark trips | Sample trips with expected results, and real trips used to check the engine's accuracy |
 
-The public data the app passes in, such as DOT flight history and gas prices, comes from a separate public `data` repo (coming), along with a monthly accuracy report on the engine's flight-time estimates. Reports are announced in the organization's GitHub Discussions.
+The public data the app passes in, such as DOT flight history and gas prices, comes from a separate public `data` repo (coming), along with a monthly accuracy report on the engine's flight-time estimates. Reports and other news are announced at [open.rideorfly.app](https://open.rideorfly.app), the organization's GitHub Discussions.
 
 ## Using it
 

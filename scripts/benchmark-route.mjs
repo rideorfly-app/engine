@@ -16,7 +16,7 @@ if (!from || !to) {
 const METERS_PER_MILE = 1609.34;
 const STATE_SAMPLE_MILES = 20;
 const DAY_DRIVING_SECONDS = 10 * 3600;
-const agent = { 'User-Agent': 'rideorfly-benchmarks (https://open.rideorfly.app)' };
+const agent = { 'User-Agent': 'rideorfly-benchmarks (https://github.com/rideorfly-app/engine)' };
 
 const url = `https://router.project-osrm.org/route/v1/driving/${from[1]},${from[0]};${to[1]},${to[0]}?overview=full&geometries=geojson&steps=true`;
 const route = (await (await fetch(url, { headers: agent })).json()).routes[0];

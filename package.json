@@ -4,7 +4,7 @@
 	"description": "The open-source scoring engine behind Ride or Fly: drive or fly, weighed on time, cost, and comfort.",
 	"license": "Apache-2.0",
 	"author": "Caleb Stauffer",
-	"homepage": "https://open.rideorfly.app",
+	"homepage": "https://github.com/rideorfly-app/engine#readme",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/rideorfly-app/engine.git"
