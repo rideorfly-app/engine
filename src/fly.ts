@@ -22,7 +22,7 @@ export interface FlyDraft {
 
 	/** For comfort: the reliability figures the flight was scored with. */
 	delayChance: number;
-	cancelChance: number;
+	disruptChance: number;
 }
 
 /** The rates the Fly side needs. It doesn't depend on the drive. */
@@ -300,7 +300,7 @@ export function buildFly(
 		arrival,
 		farePerPerson,
 		delayChance: reliability.delayChance,
-		cancelChance: reliability.cancelChance,
+		disruptChance: reliability.disruptChance,
 	};
 }
 

@@ -148,7 +148,9 @@ export interface Reliability extends Dated {
 
 	/** The chance a flight arrives more than 15 minutes late. */
 	delayChance: Chance;
-	cancelChance: Chance;
+
+	/** The chance a flight is cancelled or diverted. */
+	disruptChance: Chance;
 }
 
 export interface FlightLookups {

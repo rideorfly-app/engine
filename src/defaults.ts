@@ -148,7 +148,7 @@ export const FLY = {
 	fallbackReliability: {
 		averageDelayMinutes: 15,
 		delayChance: 0.2,
-		cancelChance: 0.015,
+		disruptChance: 0.015,
 	},
 } as const;
 
@@ -196,9 +196,9 @@ export const COMFORT = {
 
 		perConnection: -1,
 
-		/** Times the chance of a delay over 15 minutes, and of a cancellation. */
+		/** Times the chance of a delay over 15 minutes, and of a cancellation or diversion. */
 		delayChance: -2,
-		cancelChance: -10,
+		disruptChance: -10,
 
 		children: -0.5,
 		pets: -1.5,

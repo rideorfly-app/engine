@@ -61,7 +61,7 @@ export function familyLookups(overrides: Partial<Lookups> = {}): Lookups {
 				asOf: '2026-08-31',
 				averageDelayMinutes: 15,
 				delayChance: 0.18,
-				cancelChance: 0.015,
+				disruptChance: 0.015,
 			},
 		},
 		gas: {
@@ -137,7 +137,7 @@ export function soloLookups(overrides: Partial<Lookups> = {}): Lookups {
 				asOf: '2026-08-31',
 				averageDelayMinutes: 12,
 				delayChance: 0.2,
-				cancelChance: 0.015,
+				disruptChance: 0.015,
 			},
 		},
 		gas: { source: 'EIA', asOf: '2026-10-12', byRegion: { midwest: 4.25 }, national: 4.3 },

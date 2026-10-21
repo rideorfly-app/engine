@@ -215,7 +215,7 @@ function flySide(answers: Answers, lookups: Lookups, draft: FlyDraft, lines: Lin
 		minutes,
 		connections: draft.connections,
 		delayChance: draft.delayChance,
-		cancelChance: draft.cancelChance,
+		disruptChance: draft.disruptChance,
 	});
 
 	const flight = lookups.flight;

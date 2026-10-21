@@ -93,7 +93,7 @@
 				"asOf": "2026-07-31",
 				"averageDelayMinutes": -3.7,
 				"delayChance": 0.117,
-				"cancelChance": 0.028
+				"disruptChance": 0.028
 			}
 		},
 		"gas": {

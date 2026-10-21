@@ -14,8 +14,8 @@
  * 3. Average that change over three past years, skipping 2020.
  * 4. A thin route borrows its airports' seasonal pattern, or the nation's.
  *
- * The chances of a delay and a cancellation move the same way, kept between
- * 0 and 1.
+ * The chances of a delay and of a disruption (a cancellation or diversion)
+ * move the same way, kept between 0 and 1.
  */
 
 import { monthOf } from './dates';
@@ -34,8 +34,10 @@ export interface FlightMonth {
 	averageDelayMinutes: Minutes;
 
 	/** The share of flights that arrived more than 15 minutes late. */
-	lateShare: Chance;
-	cancelShare: Chance;
+	delayShare: Chance;
+
+	/** The share of flights cancelled or diverted. */
+	disruptShare: Chance;
 
 	/** Route rows only: the typical scheduled gate-to-gate time. */
 	scheduledMinutes?: Minutes;
@@ -58,7 +60,7 @@ export type DelayMethod = 'seasonal' | 'newest' | 'last-year';
 export interface DelayEstimate {
 	averageDelayMinutes: Minutes;
 	delayChance: Chance;
-	cancelChance: Chance;
+	disruptChance: Chance;
 
 	/** The route's newest month, which the estimate starts from. */
 	newestMonth: YearMonth;
@@ -70,7 +72,7 @@ export interface DelayEstimate {
 	scheduledMinutes?: Minutes;
 }
 
-type Figures = Pick<FlightMonth, 'averageDelayMinutes' | 'lateShare' | 'cancelShare'>;
+type Figures = Pick<FlightMonth, 'averageDelayMinutes' | 'delayShare' | 'disruptShare'>;
 
 /**
  * The route's expected delay for the month of `date`, or null when DOT has no
@@ -105,8 +107,8 @@ export function expectedDelay(
 		if (change) {
 			figures = {
 				averageDelayMinutes: newest.averageDelayMinutes + change.averageDelayMinutes,
-				lateShare: newest.lateShare + change.lateShare,
-				cancelShare: newest.cancelShare + change.cancelShare,
+				delayShare: newest.delayShare + change.delayShare,
+				disruptShare: newest.disruptShare + change.disruptShare,
 			};
 			season = from;
 		}
@@ -114,8 +116,8 @@ export function expectedDelay(
 
 	return {
 		averageDelayMinutes: figures.averageDelayMinutes,
-		delayChance: clampChance(figures.lateShare),
-		cancelChance: clampChance(figures.cancelShare),
+		delayChance: clampChance(figures.delayShare),
+		disruptChance: clampChance(figures.disruptShare),
 		newestMonth: newest.month,
 		season,
 		...(newest.scheduledMinutes !== undefined ? { scheduledMinutes: newest.scheduledMinutes } : {}),
@@ -173,8 +175,8 @@ function seasonalChange(rows: FlightMonth[], newest: YearMonth, gap: number): Fi
 		if (from && to) {
 			changes.push({
 				averageDelayMinutes: to.averageDelayMinutes - from.averageDelayMinutes,
-				lateShare: to.lateShare - from.lateShare,
-				cancelShare: to.cancelShare - from.cancelShare,
+				delayShare: to.delayShare - from.delayShare,
+				disruptShare: to.disruptShare - from.disruptShare,
 			});
 		}
 	}
@@ -192,8 +194,8 @@ function average(changes: Figures[]): Figures | null {
 
 	return {
 		averageDelayMinutes: mean((change) => change.averageDelayMinutes),
-		lateShare: mean((change) => change.lateShare),
-		cancelShare: mean((change) => change.cancelShare),
+		delayShare: mean((change) => change.delayShare),
+		disruptShare: mean((change) => change.disruptShare),
 	};
 }
 

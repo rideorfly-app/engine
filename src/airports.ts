@@ -95,7 +95,7 @@ export function rankAirportPairs(
 				minutes,
 				connections: fly.connections,
 				delayChance: fly.delayChance,
-				cancelChance: fly.cancelChance,
+				disruptChance: fly.disruptChance,
 			}),
 		);
 

@@ -92,7 +92,9 @@ function legSummary(origin, dest) {
 	console.log(
 		`  more than 15 minutes late: ${percent(delays.filter((d) => d > 15).length / delays.length)}`,
 	);
-	console.log(`  cancelled: ${percent(all.filter((f) => !f.flown).length / all.length)}`);
+	console.log(
+		`  cancelled or diverted: ${percent(all.filter((f) => !f.flown).length / all.length)}`,
+	);
 	return flown;
 }
 

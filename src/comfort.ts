@@ -26,7 +26,7 @@ export interface FlyComfortInput {
 	minutes: Minutes;
 	connections: number;
 	delayChance: Chance;
-	cancelChance: Chance;
+	disruptChance: Chance;
 }
 
 /** The Ride side's comfort adjustments. */
@@ -138,8 +138,8 @@ export function flyComfort(answers: Answers, input: FlyComfortInput): ComfortLin
 
 	add(
 		'reliability',
-		`Reliability: ${percent(input.delayChance)} chance of a delay over 15 minutes, ${percent(input.cancelChance)} chance of a cancellation`,
-		rules.delayChance * input.delayChance + rules.cancelChance * input.cancelChance,
+		`Reliability: ${percent(input.delayChance)} chance of a delay over 15 minutes, ${percent(input.disruptChance)} chance of a cancellation or diversion`,
+		rules.delayChance * input.delayChance + rules.disruptChance * input.disruptChance,
 	);
 
 	if (answers.children > 0) {

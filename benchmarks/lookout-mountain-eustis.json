@@ -94,7 +94,7 @@
 				"asOf": "2025-07-31",
 				"averageDelayMinutes": 24.4,
 				"delayChance": 0.385,
-				"cancelChance": 0
+				"disruptChance": 0
 			}
 		},
 		"gas": {

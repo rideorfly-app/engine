@@ -5,10 +5,10 @@ import { expectedDelay, type FlightHistory, type FlightMonth } from '../src/dela
 const row = (
 	month: string,
 	averageDelayMinutes: number,
-	lateShare = 0.2,
-	cancelShare = 0.01,
+	delayShare = 0.2,
+	disruptShare = 0.01,
 	flights = 300,
-): FlightMonth => ({ month, flights, averageDelayMinutes, lateShare, cancelShare });
+): FlightMonth => ({ month, flights, averageDelayMinutes, delayShare, disruptShare });
 
 /**
  * A route whose newest month is August 2026, with August and December rows for

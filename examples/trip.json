@@ -56,7 +56,7 @@
 				"asOf": "2026-08-31",
 				"averageDelayMinutes": 15,
 				"delayChance": 0.18,
-				"cancelChance": 0.015
+				"disruptChance": 0.015
 			}
 		},
 		"gas": {

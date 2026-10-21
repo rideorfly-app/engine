@@ -221,7 +221,7 @@ describe('buildFly', () => {
 			asOf: '2026-07-31',
 			averageDelayMinutes: -4,
 			delayChance: 0.12,
-			cancelChance: 0.03,
+			disruptChance: 0.03,
 		};
 
 		const fly = buildFly(familyAnswers(), familyLookups(), flight, settings);
