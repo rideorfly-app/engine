@@ -146,7 +146,7 @@ export interface Fare extends Dated {
 export interface Reliability extends Dated {
 	averageDelayMinutes: Minutes;
 
-	/** The chance a flight arrives more than 15 minutes late. */
+	/** The chance a flight arrives 15 minutes or more late, as DOT counts it. */
 	delayChance: Chance;
 
 	/** The chance a flight is cancelled or diverted. */

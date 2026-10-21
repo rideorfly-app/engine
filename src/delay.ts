@@ -33,7 +33,7 @@ export interface FlightMonth {
 	/** Average arrival delay. Early arrivals count as negative, so it can fall below zero. */
 	averageDelayMinutes: Minutes;
 
-	/** The share of flights that arrived more than 15 minutes late. */
+	/** The share of flights that arrived 15 minutes or more late, as DOT counts it. */
 	delayShare: Chance;
 
 	/** The share of flights cancelled or diverted. */

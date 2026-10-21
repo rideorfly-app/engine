@@ -138,7 +138,7 @@ export function flyComfort(answers: Answers, input: FlyComfortInput): ComfortLin
 
 	add(
 		'reliability',
-		`Reliability: ${percent(input.delayChance)} chance of a delay over 15 minutes, ${percent(input.disruptChance)} chance of a cancellation or diversion`,
+		`Reliability: ${percent(input.delayChance)} chance of a delay of 15 minutes or more, ${percent(input.disruptChance)} chance of a cancellation or diversion`,
 		rules.delayChance * input.delayChance + rules.disruptChance * input.disruptChance,
 	);
 

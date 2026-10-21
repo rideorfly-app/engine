@@ -12,7 +12,7 @@ The first version of the engine.
 - The verdict: cost 40%, time 35%, comfort 25%; a toss-up below 0.05, leans below 0.15.
 - The user's edits, Ours vs. Yours, and meaningful changes.
 - Airport ranking and the too-close-to-fly check.
-- Flight reliability is two figures: the chance of a delay (more than 15 minutes late, `delayChance`) and the chance of a disruption (cancelled or diverted, `disruptChance`). DOT's monthly rows use the same names, `delayShare` and `disruptShare`.
+- Flight reliability is two figures: the chance of a delay (15 minutes or more late, as DOT counts it, `delayChance`) and the chance of a disruption (cancelled or diverted, `disruptChance`). DOT's monthly rows use the same names, `delayShare` and `disruptShare`.
 - The expected delay never goes below zero. DOT's average counts early arrivals, so when a route's flights usually land early, the time saved comes off the flight time instead.
 - The expected delay for the month of travel, from DOT's monthly rows: the route's newest month plus its seasonal change, averaged over three past years and skipping 2020. A route with fewer than 100 flights in its newest month borrows its airports' seasonal pattern, or the nation's. The newest month alone and the same month last year are offered too, for the accuracy report to compare.
 - A rental for the drive is charged for each 24 hours from pickup to drop-off, so a drive straight through that runs past a day counts two days.

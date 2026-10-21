@@ -90,7 +90,7 @@ function legSummary(origin, dest) {
 		`  (late flights only, early as 0: ${mean(delays.map((d) => Math.max(d, 0))).toFixed(1)} min)`,
 	);
 	console.log(
-		`  more than 15 minutes late: ${percent(delays.filter((d) => d > 15).length / delays.length)}`,
+		`  15 minutes or more late: ${percent(delays.filter((d) => d >= 15).length / delays.length)}`,
 	);
 	console.log(
 		`  cancelled or diverted: ${percent(all.filter((f) => !f.flown).length / all.length)}`,

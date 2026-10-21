@@ -196,7 +196,7 @@ export const COMFORT = {
 
 		perConnection: -1,
 
-		/** Times the chance of a delay over 15 minutes, and of a cancellation or diversion. */
+		/** Times the chance of a delay of 15 minutes or more, and of a cancellation or diversion. */
 		delayChance: -2,
 		disruptChance: -10,
 
