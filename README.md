@@ -22,7 +22,7 @@ It's a pure function. The same inputs always give the same result, and it never 
 | Test matchups and benchmark trips | Sample trips with expected results, and trips with real figures used to check the engine's accuracy |
 | A sample trip | `examples/trip.json`, to score with `npm run try` (see Try it) |
 
-The public data the app passes in, such as DOT flight history and gas prices, comes from a separate public `data` repo (coming), along with a monthly accuracy report on the engine's flight-time estimates. Reports and other news are announced at [open.rideorfly.app](https://open.rideorfly.app), the organization's GitHub Discussions.
+The public data the app passes in, such as DOT flight history and gas prices, comes from a separate public [`data` repo](https://github.com/rideorfly-app/data) (in development), which will also publish a monthly accuracy report on the engine's flight-time estimates. Reports and other news are announced at [open.rideorfly.app](https://open.rideorfly.app), the organization's GitHub Discussions.
 
 ## Try it
 
