@@ -1,6 +1,6 @@
 # Ride or Fly: engine
 
-The public, open-source scoring engine for Ride or Fly (Apache 2.0). It turns a trip's answers and the app's lookup data into line items, scores time, cost, and comfort, and decides which way the numbers lean. It also holds the Our take prompt, the input builder, and the output check. The full design is "The scoring engine" section of `../MVP Plan.md`, which is the source of truth. Check it before changing a formula or default, and point out anything that conflicts with it.
+The public, open-source scoring engine for Ride or Fly (Apache 2.0). It turns a trip's answers and the app's lookup data into line items, scores time, cost, and comfort, and decides which way the numbers lean. It also holds the Our take prompt, the input builder, and the output check. The full design is "The scoring engine" section of `../plan/MVP Plan.md`, which is the source of truth. Check it before changing a formula or default, and point out anything that conflicts with it.
 
 The private `app` repo installs this package at one exact version. The public `data` repo, which holds the batch data jobs, installs it too (from a pinned commit on GitHub until the engine is on npm). Both depend on the engine, never the reverse: the engine never reads `data`, and its tests use their own sample files.
 
