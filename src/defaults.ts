@@ -228,17 +228,20 @@ export const VERDICT = {
  * monthly records, which arrive about two months late. See src/delay.ts.
  */
 export const DELAY = {
-	/** The seasonal change is averaged over this many past years ... */
-	seasonYears: 3,
+	/** The month of travel's month of the year is averaged over this many past years ... */
+	yearsAveraged: 5,
 
-	/** ... skipping these, so one unusual year doesn't skew it. */
+	/** ... skipping these, so the pandemic doesn't skew it ... */
 	skipYears: [2020] as readonly number[],
 
-	/** ... looking back no further than this for them. */
+	/** ... looking back no further than this for them (five years, plus one for a skipped year). */
 	lookBackYears: 6,
 
-	/** A route with fewer flights than this in its newest month borrows its airports' seasonal pattern. */
-	thinRouteFlights: 100,
+	/**
+	 * A route with this many flights a month counts half and its two airports
+	 * half; a busier route counts for more, a thinner one for less.
+	 */
+	borrowFlights: 100,
 } as const;
 
 export const AIRPORTS = {

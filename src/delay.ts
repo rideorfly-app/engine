@@ -3,19 +3,24 @@
  *
  * DOT's on-time records arrive about two months late, and people plan trips
  * months ahead, so the month of travel has no record yet. The `data` repo
- * boils each month of records down to rows (one per route, per airport, and
- * for the whole country), and the app passes in the ones a route needs. This
- * works out the estimate from them:
+ * boils each month of records down to rows (one per route and one per
+ * airport), and the app passes in the ones a route needs. This works out the
+ * estimate from them:
  *
- * 1. Start from the route's newest month: how it runs now.
- * 2. Add the season: how much the route's figures changed between those two
- *    months of the year in the past (August to December, say), in minutes
- *    rather than a percentage, since small delays make percentages swing.
- * 3. Average that change over three past years, skipping 2020.
- * 4. A thin route borrows its airports' seasonal pattern, or the nation's.
+ * 1. Take the route's figures for the same month of the year in past years
+ *    (the next December from past Decembers) and average them, over up to
+ *    five years and skipping 2020. One storm, strike, or shutdown can't skew
+ *    an average of several years the way it skews a single month.
+ * 2. A small route's own months are too few flights to trust, so its two
+ *    airports' figures for the same month count too, in proportion to how
+ *    thin the route is.
+ * 3. A route with no past year for this month starts from its newest month.
  *
  * The chances of a delay and of a disruption (a cancellation or diversion)
- * move the same way, kept between 0 and 1.
+ * follow the same steps, kept between 0 and 1.
+ *
+ * The accuracy report tested this against simpler choices on 2023 to 2025;
+ * see the changelog.
  */
 
 import { monthOf } from './dates';
@@ -43,30 +48,33 @@ export interface FlightMonth {
 	scheduledMinutes?: Minutes;
 }
 
-/** The rows the estimate needs. The app passes the newest month and, for past years, the newest month and the month of travel. */
+/**
+ * The rows the estimate needs. For the route and for each of its two
+ * airports, the app passes the month of travel's month of the year in each of
+ * the past six years (any it has), and for the route also its newest month.
+ */
 export interface FlightHistory {
 	route: FlightMonth[];
 	origin: FlightMonth[];
 	destination: FlightMonth[];
-	nation: FlightMonth[];
 }
 
 /**
- * How to estimate. The plan's method is "seasonal". The other two are the
- * simpler choices the accuracy report's first run tests it against.
+ * How to estimate. The plan's method is "average". The other two are the
+ * simpler choices the accuracy report tests it against.
  */
-export type DelayMethod = 'seasonal' | 'newest' | 'last-year';
+export type DelayMethod = 'average' | 'newest' | 'last-year';
 
 export interface DelayEstimate {
 	averageDelayMinutes: Minutes;
 	delayChance: Chance;
 	disruptChance: Chance;
 
-	/** The route's newest month, which the estimate starts from. */
+	/** The route's newest month, which a route with no past year for this month starts from. */
 	newestMonth: YearMonth;
 
-	/** Whose seasonal pattern was added: the route's own, its airports', the nation's, or none. */
-	season: 'route' | 'airports' | 'nation' | 'none';
+	/** What the figures rest on: the route's own past years, those blended with its airports', or only its newest month. */
+	basis: 'route' | 'route-and-airports' | 'newest-month';
 
 	/** The route's scheduled gate-to-gate time in its newest month, when the row has it. */
 	scheduledMinutes?: Minutes;
@@ -81,7 +89,7 @@ type Figures = Pick<FlightMonth, 'averageDelayMinutes' | 'delayShare' | 'disrupt
 export function expectedDelay(
 	history: FlightHistory,
 	date: IsoDate,
-	method: DelayMethod = 'seasonal',
+	method: DelayMethod = 'average',
 ): DelayEstimate | null {
 	const newest = newestRow(history.route);
 
@@ -89,28 +97,29 @@ export function expectedDelay(
 		return null;
 	}
 
-	// How many months of the year lie between the newest month and the month
-	// of travel: 4 from August to December, 8 from June to February.
-	const gap = (monthOf(date) - monthOf(`${newest.month}-01`) + 12) % 12;
-
 	let figures: Figures = newest;
-	let season: DelayEstimate['season'] = 'none';
+	let basis: DelayEstimate['basis'] = 'newest-month';
 
 	if (method === 'last-year') {
+		// How many months of the year lie between the newest month and the month
+		// of travel: 4 from August to December, 8 from June to February.
+		const gap = (monthOf(date) - monthOf(`${newest.month}-01`) + 12) % 12;
+
 		// The month of travel's most recent record, or the newest month if it's missing.
-		figures = findMonth(history.route, addMonths(newest.month, gap === 0 ? 0 : gap - 12)) ?? newest;
+		const lastYear = findMonth(history.route, addMonths(newest.month, gap === 0 ? 0 : gap - 12));
+
+		if (lastYear) {
+			figures = lastYear;
+			basis = 'route';
+		}
 	}
 
-	if (method === 'seasonal') {
-		const [change, from] = seasonFor(history, newest, gap);
+	if (method === 'average') {
+		const [average, from] = pastYears(history, date);
 
-		if (change) {
-			figures = {
-				averageDelayMinutes: newest.averageDelayMinutes + change.averageDelayMinutes,
-				delayShare: newest.delayShare + change.delayShare,
-				disruptShare: newest.disruptShare + change.disruptShare,
-			};
-			season = from;
+		if (average) {
+			figures = average;
+			basis = from;
 		}
 	}
 
@@ -119,84 +128,96 @@ export function expectedDelay(
 		delayChance: clampChance(figures.delayShare),
 		disruptChance: clampChance(figures.disruptShare),
 		newestMonth: newest.month,
-		season,
+		basis,
 		...(newest.scheduledMinutes !== undefined ? { scheduledMinutes: newest.scheduledMinutes } : {}),
 	};
 }
 
-/** The route's own seasonal pattern, or a busier one to borrow when the route is thin. */
-function seasonFor(
+/**
+ * The route's average for the month of travel's month of the year, blended
+ * with its airports' when the route is small. Null when no past year has a
+ * record of the route in that month.
+ */
+function pastYears(
 	history: FlightHistory,
-	newest: FlightMonth,
-	gap: number,
-): [Figures | null, DelayEstimate['season']] {
-	if (newest.flights >= DELAY.thinRouteFlights) {
-		const own = seasonalChange(history.route, newest.month, gap);
+	date: IsoDate,
+): [Figures | null, DelayEstimate['basis']] {
+	const own = sameMonthRows(history.route, date);
+	const ownAverage = average(own);
 
-		if (own) {
-			return [own, 'route'];
-		}
+	if (!ownAverage) {
+		return [null, 'newest-month'];
 	}
 
 	const airports = average(
 		[history.origin, history.destination]
-			.map((rows) => seasonalChange(rows, newest.month, gap))
-			.filter((change) => change !== null),
+			.map((rows) => average(sameMonthRows(rows, date)))
+			.filter((figures) => figures !== null),
 	);
 
-	if (airports) {
-		return [airports, 'airports'];
+	if (!airports) {
+		return [ownAverage, 'route'];
 	}
 
-	const nation = seasonalChange(history.nation, newest.month, gap);
+	// A route with `borrowFlights` flights a month counts half; a busier one counts for more.
+	const flights = own.reduce((total, row) => total + row.flights, 0) / own.length;
+	const weight = flights / (flights + DELAY.borrowFlights);
 
-	return nation ? [nation, 'nation'] : [null, 'none'];
+	return [
+		{
+			averageDelayMinutes: blend(
+				ownAverage.averageDelayMinutes,
+				airports.averageDelayMinutes,
+				weight,
+			),
+			delayShare: blend(ownAverage.delayShare, airports.delayShare, weight),
+			disruptShare: blend(ownAverage.disruptShare, airports.disruptShare, weight),
+		},
+		'route-and-airports',
+	];
 }
 
 /**
- * The average change from the newest month's month of the year to the month
- * of travel's, over up to three past years, skipping 2020. Null when no past
- * year has both months.
+ * The rows for the month of travel's month of the year in past years: the
+ * most recent years that have one, up to `yearsAveraged`, skipping 2020.
  */
-function seasonalChange(rows: FlightMonth[], newest: YearMonth, gap: number): Figures | null {
-	const changes: Figures[] = [];
+function sameMonthRows(rows: FlightMonth[], date: IsoDate): FlightMonth[] {
+	const found: FlightMonth[] = [];
+	const year = Number(date.slice(0, 4));
 
-	for (let back = 1; back <= DELAY.lookBackYears && changes.length < DELAY.seasonYears; back++) {
-		const fromMonth = addMonths(newest, -12 * back);
-		const toMonth = addMonths(fromMonth, gap);
-
-		if (DELAY.skipYears.includes(yearOf(fromMonth)) || DELAY.skipYears.includes(yearOf(toMonth))) {
+	for (let back = 1; back <= DELAY.lookBackYears && found.length < DELAY.yearsAveraged; back++) {
+		if (DELAY.skipYears.includes(year - back)) {
 			continue;
 		}
 
-		const from = findMonth(rows, fromMonth);
-		const to = findMonth(rows, toMonth);
+		const row = findMonth(rows, `${year - back}-${date.slice(5, 7)}`);
 
-		if (from && to) {
-			changes.push({
-				averageDelayMinutes: to.averageDelayMinutes - from.averageDelayMinutes,
-				delayShare: to.delayShare - from.delayShare,
-				disruptShare: to.disruptShare - from.disruptShare,
-			});
+		if (row) {
+			found.push(row);
 		}
 	}
 
-	return average(changes);
+	return found;
 }
 
-function average(changes: Figures[]): Figures | null {
-	if (changes.length === 0) {
+function average(rows: Figures[]): Figures | null {
+	if (rows.length === 0) {
 		return null;
 	}
 
-	const mean = (pick: (change: Figures) => number) =>
-		changes.reduce((total, change) => total + pick(change), 0) / changes.length;
+	const mean = (pick: (row: Figures) => number) =>
+		rows.reduce((total, row) => total + pick(row), 0) / rows.length;
 
 	return {
-		averageDelayMinutes: mean((change) => change.averageDelayMinutes),
-		delayShare: mean((change) => change.delayShare),
-		disruptShare: mean((change) => change.disruptShare),
+		averageDelayMinutes: mean((row) => row.averageDelayMinutes),
+		delayShare: mean((row) => row.delayShare),
+		disruptShare: mean((row) => row.disruptShare),
 	};
+}
+
+/** `weight` of `own` and the rest of `borrowed`. */
+function blend(own: number, borrowed: number, weight: number): number {
+	return weight * own + (1 - weight) * borrowed;
 }
 
 function newestRow(rows: FlightMonth[]): FlightMonth | undefined {
@@ -212,16 +233,12 @@ function findMonth(rows: FlightMonth[], month: YearMonth): FlightMonth | undefin
 
 /** The month `count` months after `month`; negative counts go back. */
 function addMonths(month: YearMonth, count: number): YearMonth {
-	const index = yearOf(month) * 12 + Number(month.slice(5, 7)) - 1 + count;
+	const index = Number(month.slice(0, 4)) * 12 + Number(month.slice(5, 7)) - 1 + count;
 	const year = Math.floor(index / 12);
 
 	return `${year}-${String((index % 12) + 1).padStart(2, '0')}`;
 }
 
-function yearOf(month: YearMonth): number {
-	return Number(month.slice(0, 4));
-}
-
-function clampChance(chance: number): Chance {
+function clampChance(chance: Chance): Chance {
 	return Math.min(1, Math.max(0, chance));
 }
