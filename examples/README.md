@@ -31,7 +31,7 @@ Every lookup has a `source` and an `asOf` date, which the page shows beside the 
 
 | Field | What to put |
 | --- | --- |
-| `drive` | `miles`, `minutes` of driving (no stops), `milesByState` (for gas prices and road safety), `winterPasses` (names of listed passes on the route; usually `[]`), and the route's `midpoint` (for sunset) |
+| `drive` | `miles`, `minutes` of driving (no stops), `milesByState` (for gas prices and road safety), `winterPasses` (names of listed passes on the route; usually `[]`), and the route's `midpoint` (for sunset; only its latitude is used) |
 | `flight` | The two airports (`code`, `name`, `size`: `large`, `medium`, or `small`, `lat`, `lon`, and optional `parkingPerDay`); the drives `toOrigin` and `fromDestination` (`miles`, `minutes`); `fare` (`perPerson`, optional `minutes` and `stops`) or `null` to have the engine estimate one; `schedule` (a nonstop's `minutes`) or `null`; `reliability` (`averageDelayMinutes`, `delayChance`, `disruptChance`, from DOT) or `null` for typical figures. Set the whole `flight` to `null` for a trip too close to fly |
 | `gas` | Regular gas per gallon by EIA region (`new-england`, `central-atlantic`, `lower-atlantic`, `midwest`, `gulf-coast`, `rocky-mountain`, `west-coast`, `california`), plus a `national` price for any region you leave out |
 | `perDiem` | GSA's `lunch` and `lodging` rates for the `start` and `destination`, and optionally an `overnight` stop |
