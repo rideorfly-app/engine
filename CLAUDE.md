@@ -32,7 +32,7 @@ The owner is a web developer who builds custom WordPress themes and plugins. Inf
 | `src/defaults.ts` | Every assumption and estimate, with its reason |
 | `src/score.ts` | `score()`: builds Ours and Yours, applies edits, decides |
 | `src/ride.ts`, `src/fly.ts` | Each side's cost and time lines |
-| `src/clock.ts`, `src/sun.ts` | The 8:00 a.m. travel clock: stops, meals, night driving |
+| `src/clock.ts`, `src/sun.ts` | The 8:00 a.m. travel clock: stops, meals, night driving. One fixed clock with no time zone: sunrise and sunset from the route's latitude and the date, plus an hour in daylight saving season (`isDaylightSavingTime` in `src/dates.ts`) |
 | `src/comfort.ts`, `src/verdict.ts` | Comfort adjustments, leans, verdict, confidence |
 | `src/compare.ts` | Ours vs. Yours, and meaningful changes |
 | `src/delay.ts` | The expected delay for the month of travel, from DOT's monthly rows (the row format `data` publishes) |

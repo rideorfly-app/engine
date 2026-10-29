@@ -83,7 +83,6 @@
 			"byState": { "CO": 1.1, "WY": 1.45, "UT": 0.95 },
 			"national": 1.26
 		},
-		"utcOffsetMinutes": -420,
 		"dataVersion": "sample"
 	},
 	"edits": {}

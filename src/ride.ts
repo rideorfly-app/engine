@@ -57,7 +57,6 @@ export function buildRide(answers: Answers, lookups: Lookups, settings: Settings
 		mealStopMinutes: DRIVE.mealStopMinutes,
 		date: answers.date,
 		midpoint: drive.midpoint,
-		utcOffsetMinutes: lookups.utcOffsetMinutes,
 	});
 
 	// --- The car ---

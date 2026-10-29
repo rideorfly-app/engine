@@ -2,14 +2,23 @@
  * The travel clock.
  *
  * There's no departure-time question, so both sides leave the door at 8:00
- * a.m. on the start's clock. That one assumed clock decides which meals a trip
+ * a.m. on one fixed clock. That one assumed clock decides which meals a trip
  * spans and how much of a drive is in the dark, the same way for both sides.
+ *
+ * The clock is not any time zone: the traveler is pretended to sit at longitude
+ * 0 and never leave it, so the clock, UTC, and the sun's own clock agree. Noon
+ * is solar noon, sunset falls where the day's length puts it, and only the
+ * route's latitude and the date matter. One piece of a real wall clock is kept:
+ * in daylight saving season the sun's times are an hour later on the clock,
+ * since that hour is the same for most of the country and needs only the date.
+ * Time zones themselves are not followed, so a place at the edge of its zone
+ * can still be off by up to an hour.
  *
  * Times here are ClockMinutes: minutes after midnight on the first travel day,
  * so 1:30 p.m. on day two is 1440 + 810.
  */
 
-import { addDays } from './dates';
+import { addDays, isDaylightSavingTime } from './dates';
 import { MEAL_TIMES, START_TIME } from './defaults';
 import { sunTimes } from './sun';
 import type { ClockMinutes, IsoDate, Minutes } from './units';
@@ -58,6 +67,9 @@ export interface DrivePlan {
 	nightMinutes: Minutes;
 }
 
+/** The hour daylight saving time adds to the wall clock. */
+const DAYLIGHT_SAVING_MINUTES = 60;
+
 export interface DrivePlanOptions {
 	/** All the driving, split evenly across the days. */
 	drivingMinutes: Minutes;
@@ -69,10 +81,9 @@ export interface DrivePlanOptions {
 	restStopMinutes: Minutes;
 	mealStopMinutes: Minutes;
 
-	/** For sunset and sunrise. */
+	/** For sunset and sunrise: the date, and the route's midpoint (only its latitude is used). */
 	date: IsoDate;
 	midpoint: { lat: number; lon: number };
-	utcOffsetMinutes: number;
 }
 
 /**
@@ -163,14 +174,18 @@ function darkIntervals(
 	options: DrivePlanOptions,
 	throughDay: number,
 ): Array<[ClockMinutes, ClockMinutes]> {
-	const { lat, lon } = options.midpoint;
+	const { lat } = options.midpoint;
 
+	// Longitude 0, where the clock the traveler keeps is the sun's own clock,
+	// plus the hour that daylight saving time puts on the wall clock.
 	const sun = (day: number) => {
-		const times = sunTimes(addDays(options.date, day), lat, lon);
+		const date = addDays(options.date, day);
+		const times = sunTimes(date, lat, 0);
+		const shift = isDaylightSavingTime(date) ? DAYLIGHT_SAVING_MINUTES : 0;
 
 		return {
-			sunrise: day * DAY + times.sunrise + options.utcOffsetMinutes,
-			sunset: day * DAY + times.sunset + options.utcOffsetMinutes,
+			sunrise: day * DAY + times.sunrise + shift,
+			sunset: day * DAY + times.sunset + shift,
 		};
 	};
 

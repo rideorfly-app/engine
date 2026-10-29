@@ -81,7 +81,7 @@ The engine never fetches anything. The app looks up the drive, the fare, and the
 ## How it decides
 
 1. **Lines.** Each side gets cost and time lines, door to door: fuel and wear, hotel stops, meals on the road, fares, bags, getting to and from the airports, the time at the airport, the flight, and expected delays. Each line's total is rounded to $5 or 5 minutes, since these are estimates to help decide, not a budget.
-2. **The clock.** Both sides leave at 8:00 a.m. The drive is laid out on the clock, so meals and night driving are counted the same way for both sides.
+2. **The clock.** Both sides leave at 8:00 a.m. on one fixed clock, not any time zone. The drive is laid out on the clock, so meals and night driving are counted the same way for both sides. Sunrise and sunset come from the route's latitude and the date, with an hour added in daylight saving season, so the app never has to send a time zone.
 3. **Comfort.** Both sides start at 7 out of 10, and named adjustments move them: long days, night driving, road risk by state, winter passes, connections, delay odds, children, pets, and the traveler's own preference.
 4. **The verdict.** Cost, time, and comfort each become a lean toward Ride or Fly, weighted 40%, 35%, and 25% by default. The weighted sum is the verdict, and its size is the confidence.
 

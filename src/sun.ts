@@ -11,12 +11,15 @@ import type { IsoDate, Minutes } from './units';
 const ZENITH = (90.833 * Math.PI) / 180;
 
 export interface SunTimes {
-	/** Minutes after midnight UTC on the date. */
+	/** Minutes after midnight on the clock of the longitude asked for (UTC at longitude 0), on the date. */
 	sunrise: Minutes;
 	sunset: Minutes;
 }
 
-/** Sunrise and sunset on `date` at a point, in minutes after midnight UTC. */
+/**
+ * Sunrise and sunset on `date` at a point, in minutes after midnight UTC. Asked
+ * for longitude 0, they are on the travel clock, which has no time zone.
+ */
 export function sunTimes(date: IsoDate, lat: number, lon: number): SunTimes {
 	// The fractional year, in radians, at noon.
 	const gamma = ((2 * Math.PI) / daysInYear(date)) * (dayOfYear(date) - 1);

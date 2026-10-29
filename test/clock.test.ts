@@ -11,7 +11,6 @@ const family: DrivePlanOptions = {
 	mealStopMinutes: 30,
 	date: '2026-12-18',
 	midpoint: { lat: 41.59, lon: -109.2 },
-	utcOffsetMinutes: -420,
 };
 
 describe('planDrive', () => {
@@ -27,9 +26,25 @@ describe('planDrive', () => {
 	it('counts the driving after a December sunset', () => {
 		const plan = planDrive(family);
 
-		// Sunset near Rock Springs is about 4:48 p.m.; the last 25 minutes are in the dark.
-		expect(plan.nightMinutes).toBeGreaterThan(20);
-		expect(plan.nightMinutes).toBeLessThan(30);
+		// On the fixed clock (the sun's own, at longitude 0) sunset at this latitude is
+		// about 4:47 p.m., so the last 38 minutes of the 5:25 arrival are in the dark.
+		// A Mountain Time wall clock at Rock Springs would put sunset about 17 minutes
+		// later, because the town sits west of its zone's middle: the cost of having
+		// no time zones.
+		expect(plan.nightMinutes).toBeGreaterThan(33);
+		expect(plan.nightMinutes).toBeLessThan(43);
+	});
+
+	it('puts the dark an hour later on the clock in daylight saving season', () => {
+		// The last standard-time day and the first daylight-saving day have almost the
+		// same sun, so the same long drive spends about an hour less in the dark.
+		// No stops, so the minutes in the dark are just the minutes after sunset.
+		const long = { ...family, drivingMinutes: 720, restStopMinutes: 0, mealStopMinutes: 0 };
+		const standard = planDrive({ ...long, date: '2026-03-07' }).nightMinutes;
+		const daylight = planDrive({ ...long, date: '2026-03-08' }).nightMinutes;
+
+		expect(standard - daylight).toBeGreaterThan(55);
+		expect(standard - daylight).toBeLessThan(65);
 	});
 
 	it('stops less often without children', () => {

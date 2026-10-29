@@ -106,7 +106,7 @@ export interface Drive extends Dated {
 	/** Names of listed winter passes the route crosses, such as "Sherman Summit (I-80)". */
 	winterPasses: string[];
 
-	/** The route's midpoint, for sunset and sunrise. */
+	/** The route's midpoint, for sunset and sunrise. Only its latitude is used: the travel clock sits at longitude 0 (see `clock.ts`). */
 	midpoint: { lat: number; lon: number };
 }
 
@@ -226,12 +226,6 @@ export interface Lookups {
 		byState: Partial<Record<StateCode, number>>;
 		national: number;
 	};
-
-	/**
-	 * The start's offset from UTC on the travel date, in minutes, such as −420
-	 * for Mountain Standard Time. The whole trip runs on the start's clock.
-	 */
-	utcOffsetMinutes: number;
 
 	/** The `data` release the lookups were loaded from, such as "2026-10-14". */
 	dataVersion: string;

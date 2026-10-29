@@ -10,7 +10,7 @@
 import type { AirportSize, Weights } from './types';
 import type { Dollars, Minutes } from './units';
 
-/** Both sides leave the door at 8:00 a.m., on the start's clock. */
+/** Both sides leave the door at 8:00 a.m., on one fixed clock (see `clock.ts`). */
 export const START_TIME: Minutes = 8 * 60;
 
 /** A meal counts when the traveler is still on the way at one of these times. */

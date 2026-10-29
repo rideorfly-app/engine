@@ -30,6 +30,33 @@ export function monthOf(date: IsoDate): number {
 	return Number(date.slice(5, 7));
 }
 
+/** The day of the month of the nth Sunday (1 for the first) in a month, 1 for January. */
+function nthSunday(year: number, month: number, n: number): number {
+	const firstSunday = 1 + ((7 - new Date(Date.UTC(year, month - 1, 1)).getUTCDay()) % 7);
+
+	return firstSunday + 7 * (n - 1);
+}
+
+/**
+ * Whether the United States is on daylight saving time on this date: from the
+ * second Sunday in March up to the first Sunday in November. It's one rule for
+ * the whole country by date alone (Arizona and Hawaii, which skip it, are left
+ * out on purpose).
+ */
+export function isDaylightSavingTime(date: IsoDate): boolean {
+	const year = Number(date.slice(0, 4));
+	const month = monthOf(date);
+	const day = Number(date.slice(8, 10));
+
+	if (month > 3 && month < 11) {
+		return true;
+	}
+
+	return (
+		(month === 3 && day >= nthSunday(year, 3, 2)) || (month === 11 && day < nthSunday(year, 11, 1))
+	);
+}
+
 /** The number of days in the date's year. */
 export function daysInYear(date: IsoDate): number {
 	const year = Number(date.slice(0, 4));

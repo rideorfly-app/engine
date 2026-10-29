@@ -37,7 +37,6 @@ Every lookup has a `source` and an `asOf` date, which the page shows beside the 
 | `perDiem` | GSA's `lunch` and `lodging` rates for the `start` and `destination`, and optionally an `overnight` stop |
 | `rental` | Average daily rental rates at the `start` and `destination`, before taxes and fees |
 | `roadSafety` | Road deaths per 100 million miles `byState`, and the `national` rate |
-| `utcOffsetMinutes` | The start's offset from UTC on the date: −300 for Eastern Standard Time, −240 for Eastern Daylight Time, −420 for Mountain Standard Time |
 | `dataVersion` | Any label for where your figures came from, such as `"mine"` |
 
 ## `edits`: what you'd change in the workbench

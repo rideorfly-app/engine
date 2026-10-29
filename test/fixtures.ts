@@ -83,7 +83,6 @@ export function familyLookups(overrides: Partial<Lookups> = {}): Lookups {
 			byState: { CO: 1.1, WY: 1.45, UT: 0.95 },
 			national: 1.26,
 		},
-		utcOffsetMinutes: -420,
 		dataVersion: '2026-10-14',
 		...overrides,
 	};
@@ -154,7 +153,6 @@ export function soloLookups(overrides: Partial<Lookups> = {}): Lookups {
 			byState: { IL: 1.23, WI: 0.87, MN: 0.71 },
 			national: 1.26,
 		},
-		utcOffsetMinutes: -360,
 		dataVersion: '2026-10-14',
 		...overrides,
 	};

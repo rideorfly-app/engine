@@ -136,7 +136,6 @@
 			},
 			"national": 1.19
 		},
-		"utcOffsetMinutes": -360,
 		"dataVersion": "benchmark"
 	},
 	"actual": {

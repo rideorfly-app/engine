@@ -7,7 +7,8 @@ Every change that can move a result (a formula, a default, or a threshold) is a 
 The first version of the engine.
 
 - Ride and Fly cost and time lines, door to door, each rounded to $5 or 5 minutes. Drive times come without traffic for the MVP; the rush-hour note appears only once the app passes a time without traffic beside a traffic-aware one.
-- The 8:00 a.m. travel clock for rest stops, meals, and night driving.
+- The 8:00 a.m. travel clock for rest stops, meals, and night driving. It is one fixed clock, not any time zone: the traveler is pretended to sit at longitude 0 and never leave it, so sunrise and sunset come from the route midpoint's latitude and the date alone, plus an hour in United States daylight saving season (second Sunday in March to the first Sunday in November, by date). There is no UTC offset input and the app needs no time zone data.
+  - The cost is that a real wall clock can differ from this one, mostly at the edge of a time zone. On the three benchmark trips the fixed clock puts sunset 25 to 53 minutes earlier than the local wall clock would, and all three verdicts are unchanged. Without the daylight saving hour the July Georgia to Florida trip would have been 96 minutes off and its verdict would have moved from "leans ride" to "toss-up".
 - Comfort from named adjustments, starting both sides at 7.
 - The verdict: cost 40%, time 35%, comfort 25%; a toss-up below 0.05, leans below 0.15.
 - The user's edits, Ours vs. Yours, and meaningful changes.
