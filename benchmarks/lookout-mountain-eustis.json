@@ -1,0 +1,183 @@
+{
+	"id": "lookout-mountain-eustis",
+	"title": "Lookout Mountain, GA to Eustis, FL, four adults and four children in a rented 15-passenger van, on a Saturday in July",
+	"covers": "A real trip with the traveler's own door-to-door time and receipts; a group of eight in one van (the second car switched off); a rented diesel passenger van; straight through past the daily limit with four adults to share the wheel; summer; toll roads avoided; small airports with a thin nonstop route; no fare found",
+	"gatheredOn": "2026-10-15",
+	"gatheredBy": "",
+	"answers": {
+		"from": {
+			"id": "30750",
+			"name": "Lookout Mountain",
+			"state": "GA",
+			"lat": 34.936814,
+			"lon": -85.388204
+		},
+		"to": {
+			"id": "32736",
+			"name": "Eustis",
+			"state": "FL",
+			"lat": 28.916675,
+			"lon": -81.489093
+		},
+		"date": "2026-07-11",
+		"adults": 4,
+		"children": 4,
+		"car": {
+			"kind": "rental"
+		},
+		"toAirport": {
+			"mode": "rideshare"
+		},
+		"fromAirport": "rideshare",
+		"checkedBags": 4,
+		"pets": 0,
+		"preference": 100,
+		"longDrive": "straight"
+	},
+	"edits": {
+		"lines": {
+			"ride.secondCar": { "on": false }
+		}
+	},
+	"lookups": {
+		"drive": {
+			"source": "OSRM (OpenStreetMap contributors)",
+			"asOf": "2026-10-15",
+			"miles": 544.3,
+			"minutes": 658,
+			"milesByState": {
+				"GA": 359.1,
+				"TN": 5.7,
+				"FL": 179.5
+			},
+			"winterPasses": [],
+			"midpoint": {
+				"lat": 33.04,
+				"lon": -83.93
+			}
+		},
+		"flight": {
+			"origin": {
+				"code": "CHA",
+				"name": "Chattanooga Metropolitan",
+				"size": "small",
+				"lat": 35.0353,
+				"lon": -85.2038
+			},
+			"destination": {
+				"code": "SFB",
+				"name": "Orlando Sanford International",
+				"size": "small",
+				"lat": 28.7776,
+				"lon": -81.2375
+			},
+			"toOrigin": {
+				"source": "OSRM (OpenStreetMap contributors)",
+				"asOf": "2026-10-15",
+				"miles": 18.7,
+				"minutes": 38
+			},
+			"fromDestination": {
+				"source": "OSRM (OpenStreetMap contributors)",
+				"asOf": "2026-10-15",
+				"miles": 32.2,
+				"minutes": 67
+			},
+			"fare": null,
+			"schedule": {
+				"source": "DOT on-time records, July 2025",
+				"asOf": "2025-07-31",
+				"minutes": 97
+			},
+			"reliability": {
+				"source": "DOT on-time records, July 2025",
+				"asOf": "2025-07-31",
+				"averageDelayMinutes": 24.4,
+				"delayChance": 0.385,
+				"disruptChance": 0
+			}
+		},
+		"gas": {
+			"source": "EIA",
+			"asOf": "2026-07-06",
+			"byRegion": {
+				"lower-atlantic": 3.562,
+				"midwest": 3.531
+			},
+			"national": 3.777
+		},
+		"perDiem": {
+			"source": "GSA FY2026",
+			"asOf": "2025-10-01",
+			"start": {
+				"lunch": 19,
+				"lodging": 110
+			},
+			"destination": {
+				"lunch": 19,
+				"lodging": 110
+			}
+		},
+		"rental": {
+			"source": "Placeholder, not gathered: $55, as in the other trips",
+			"asOf": "2026-10-15",
+			"start": 55,
+			"destination": 55
+		},
+		"roadSafety": {
+			"source": "IIHS from FARS, 2024",
+			"asOf": "2026-06-01",
+			"byState": {
+				"GA": 1.15,
+				"TN": 1.52,
+				"FL": 1.26
+			},
+			"national": 1.19
+		},
+		"dataVersion": "benchmark"
+	},
+	"actual": {
+		"ride": {
+			"time": [
+				{
+					"what": "Door to door: left about 6:00 a.m. and arrived about 6:00 p.m., with two meal stops of about an hour each and about two stops for fuel and restrooms",
+					"amount": 720,
+					"basis": "observed",
+					"source": "The traveler's own times, rounded to the hour, 2026-07-11"
+				}
+			],
+			"cost": [
+				{
+					"what": "One day of the van: a six-day round-trip rental, July 6 to 12, at $552.78 ÷ 6",
+					"amount": 92.13,
+					"basis": "observed",
+					"source": "The traveler's receipt"
+				},
+				{
+					"what": "Diesel: the fill-up on the way ($95.26) and the refill before returning the van ($65.01)",
+					"amount": 160.27,
+					"basis": "observed",
+					"source": "The traveler's receipts"
+				},
+				{
+					"what": "Lunch and dinner for four adults and four children",
+					"amount": 122.86,
+					"basis": "observed",
+					"source": "The traveler's receipts"
+				}
+			]
+		}
+	},
+	"notes": [
+		"A real trip: the traveler's times and receipts are the only figures in `actual`. The Fly side has no real result, so only the Ride side is checked; its lookups are filled from public data so the verdict can be read.",
+		"Eight travelers in one 15-passenger van. The engine adds a second car above five travelers, so `edits` switches it off, as the traveler would in the workbench.",
+		"The van ran on diesel. The engine prices fuel as regular gasoline at a typical rental's 30 mpg. EIA's Lower Atlantic diesel was $4.477 a gallon the week of July 6, against $3.562 for regular. The two receipts come to about 35 gallons at that price, or about 15.5 mpg, which fits a loaded Sprinter; the fill-up on the way alone would mean 26 mpg, so both are counted. They include a little driving around Eustis before the van went back.",
+		"The van was a round-trip rental, so there was no one-way drop fee. The engine assumes a one-way rental and adds $150. One day of the six is counted, since the drive took one day.",
+		"A 15-passenger van rents for more than the regional average car the engine is given. Its daily rate is a placeholder ($55, as in the other trips), since rental sites can't be scripted; the real van cost about $92 a day with taxes and fees.",
+		"Meals cost about $7.70 a person a meal, well under GSA's $19 lunch rate, which the engine uses for a quick-serve meal. No snacks were counted, since none were reported.",
+		"The traveler left at about 6:00 a.m.; the engine always starts at 8:00. In July that changes no meals and no night driving: both clocks arrive before sunset.",
+		"The drive is 10 h 58 min on OSRM, just past the 10-hour limit, so with four adults the engine asks hotel or straight through. The traveler drove straight through. Toll roads were avoided; OSRM's route already avoids them (I-75 and county roads, no Florida's Turnpike).",
+		"The traveler is an anxious flyer, and set the preference all the way to Ride (100). Getting to and from the airports by rideshare (two cars each way) and four checked bags are Claude's calls for a group of eight; the traveler didn't fly.",
+		"Chattanooga to Orlando had two thin nonstop routes in July 2025: 13 flights to Sanford (SFB) and 16 to Orlando International (MCO). SFB is closer to Eustis. Its `schedule` and `reliability` come from July 2025 alone, not the plan's seasonal method, since there's no real flight to check against. No fare was gathered, so the engine estimates one; the toddlers had just turned three, so all eight need seats."
+	]
+}

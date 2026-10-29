@@ -1,0 +1,14 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"noEmit": false,
+
+		// The engine itself runs in browsers and Workers, so no Node APIs.
+		"types": [],
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"rootDir": "src",
+		"outDir": "dist/types"
+	},
+	"include": ["src"]
+}
